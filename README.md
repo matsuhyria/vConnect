@@ -62,7 +62,8 @@ Open the `server` and `client` in separate VSCode workspaces or open the combine
 
 ### Purpose
 
-2-5 sentences describing what the system does
+The system aims to facilitate the management of volunteer efforts, ensuring that volunteers can easily find causes to support while organizations can efficiently manage their volunteer workforce.
+
 
 ### Pages
 
