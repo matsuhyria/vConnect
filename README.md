@@ -1,17 +1,17 @@
 # Backend and Frontend Template
 
-Latest version: https://git.chalmers.se/courses/dit342/group-00-web
+Latest version: [https://git.chalmers.se/courses/dit342/group-00-web](https://git.chalmers.se/courses/dit342/group-00-web)
 
 This template refers to itself as `group-00-web`. In your project, use your group number in place of `00`.
 
 ## Project Structure
 
-| File        | Purpose           | What you do?  |
-| ------------- | ------------- | ----- |
-| `server/` | Backend server code | All your server code |
-| [server/README.md](server/README.md) | Everything about the server | **READ ME** carefully! |
-| `client/` | Frontend client code | All your client code |
-| [client/README.md](client/README.md) | Everything about the client | **READ ME** carefully! |
+| File                                              | Purpose                     | What you do?                             |
+| ------------------------------------------------- | --------------------------- | ---------------------------------------- |
+| `server/`                                       | Backend server code         | All your server code                     |
+| [server/README.md](server/README.md)                 | Everything about the server | **READ ME** carefully!             |
+| `client/`                                       | Frontend client code        | All your client code                     |
+| [client/README.md](client/README.md)                 | Everything about the client | **READ ME** carefully!             |
 | [docs/LOCAL_DEPLOYMENT.md](docs/LOCAL_DEPLOYMENT.md) | Local production deployment | Deploy your app local in production mode |
 
 ## Requirements
@@ -24,12 +24,13 @@ You can also use alternative tools if you know how to configure them (e.g., Fire
     * `git config --global user.name "YOUR_USERNAME"` => check `git config --global user.name`
     * `git config --global user.email "email@example.com"` => check `git config --global user.email`
   * > **Windows users**: We recommend to use the [Git Bash](https://www.atlassian.com/git/tutorials/git-bash) shell from your Git installation or the Bash shell from the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to run all shell commands for this project.
+    >
 * [Chalmers GitLab](https://git.chalmers.se/) => Login with your **Chalmers CID** choosing "Sign in with" **Chalmers Login**. (contact [support@chalmers.se](mailto:support@chalmers.se) if you don't have one)
-  * DIT342 course group: https://git.chalmers.se/courses/dit342
+  * DIT342 course group: [https://git.chalmers.se/courses/dit342](https://git.chalmers.se/courses/dit342)
   * [Setup SSH key with Gitlab](https://docs.gitlab.com/ee/ssh/)
     * Create an SSH key pair `ssh-keygen -t ed25519 -C "email@example.com"` (skip if you already have one)
-    * Add your public SSH key to your Gitlab profile under https://git.chalmers.se/profile/keys
-    * Make sure the email you use to commit is registered under https://git.chalmers.se/profile/emails
+    * Add your public SSH key to your Gitlab profile under [https://git.chalmers.se/profile/keys](https://git.chalmers.se/profile/keys)
+    * Make sure the email you use to commit is registered under [https://git.chalmers.se/profile/emails](https://git.chalmers.se/profile/emails)
   * Checkout the [Backend-Frontend](https://git.chalmers.se/courses/dit342/group-00-web) template `git clone git@git.chalmers.se:courses/dit342/group-00-web.git`
 * [Server Requirements](./server/README.md#Requirements)
 * [Client Requirements](./client/README.md#Requirements)
@@ -69,20 +70,23 @@ The system aims to facilitate the management of volunteer efforts, ensuring that
 ### Pages
 
 **Volunteers:**
-    - Home (Public): The starting point for volunteers, showcasing upcoming events and personalized recommendations.
-    - Opportunity Listing (Public): A list of available volunteering opportunities for users to browse.
-    - Opportunity Details (Public): Detailed view of a selected opportunity with event-specific information.
-    - Profile: A volunteer’s personal page for managing their details and viewing history.
-    - Feedback: Allows volunteers to leave feedback after participating in an event.
+
+* Home (Public): The starting point for volunteers, showcasing upcoming events and personalized recommendations.
+* Opportunity Listing (Public): A list of available volunteering opportunities for users to browse.
+* Opportunity Details (Public): Detailed view of a selected opportunity with event-specific information.
+* Profile: A volunteer’s personal page for managing their details and viewing history.
+* Feedback: Allows volunteers to leave feedback after participating in an event.
 
 **Organizations:**
-    - Listing  (Public)
-    - Dashboard: organizations to manage their events and volunteers
-    - Opportunity Management: Manage events that belongs to this organization.
-    - Organization Profile (Public): Showcasing organization's mission and events
+
+* Listing  (Public)
+* Dashboard: organizations to manage their events and volunteers
+* Opportunity Management: Manage events that belongs to this organization.
+* Organization Profile (Public): Showcasing organization's mission and events
 
 **Common:**
-    - Login/Registration: Entry point for users to log in or create a new account.
+
+* Login/Registration: Entry point for users to log in or create a new account.
 
 ### Entity-Relationship (ER) Diagram
 
