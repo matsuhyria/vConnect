@@ -3,8 +3,6 @@ const router = express.Router();
 
 const { createOrganization, getAllOrganizations, getOrganizationById, updateOrganizationById, deleteOrganizationById} = require('../contollers/organizationController');
 
-console.log('Function is defined', deleteOrganizationById);
-
 router.post('/api/v1/organizations', createOrganization);
 router.get('/api/v1/organizations', getAllOrganizations);
 router.get('/api/v1/organizations/:id', getOrganizationById);
