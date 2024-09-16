@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { createOrganization, getAllOrganizations, getOrganizationById, updateOrganizationById, deleteOrganizationById} = require('../contollers/organizationController');
+const { createOrganization, getAllOrganizations, getOrganizationById, updateOrganizationById, deleteOrganizationById } = require('../controllers/organizationController');
 
 router.post('/api/v1/organizations', createOrganization);
 router.get('/api/v1/organizations', getAllOrganizations);
