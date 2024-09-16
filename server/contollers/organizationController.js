@@ -1,17 +1,13 @@
 const Organization = require('../models/organization');
 
 const createOrganization = async (req, res) => {
-    const { name, description, managed_by, email, address } = req.body;
     try {
-        if(!name || !description || !managed_by || !email || !address) {
-            return res.status(400).json({ error: 'All following fields are required: name, description, managed_by, email and address'}); 
-        }
-    
         const organization = new Organization(req.body);
         const savedOrg = await organization.save();
 
         res.status(201).json(savedOrg);
     } catch(err) {
+        console.log(err);
         res.status(500).json({ error: err.message });
     }
 };
@@ -40,6 +36,7 @@ const getOrganizationById = async (req, res) => {
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid organization ID' });
         }
+        console.log(err);
         return res.status(500).json({ error: 'Failed to retreive organization by id' });
     }
 };
@@ -64,6 +61,7 @@ const updateOrganizationById = async (req, res) => {
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid organization ID' });
         }
+        console.log(err);
         return res.status(500).json({ error: 'Failed to update organization' });
     }
 };
@@ -77,12 +75,13 @@ const deleteOrganizationById = async (req, res) => {
         if (!organization) {
             return res.status(404).json({ error: 'Organization not found' });
         }
-
+        
         res.status(200).json({ message: 'Organization deleted successfully' });
     } catch (err) {
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid organization ID' });
         }
+        console.log(err);
         res.status(500).json({ error: 'Failed to delete organization' });
     }
 };
