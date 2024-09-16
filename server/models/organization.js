@@ -25,8 +25,9 @@ const orgSchema = new Schema({
         required: true
     },
     rating: {
-        type: String,
-        required: true
+        type: Number,
+        min: 1,
+        max: 5
     }
 });
 
