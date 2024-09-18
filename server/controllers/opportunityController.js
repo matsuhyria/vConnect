@@ -1,11 +1,11 @@
 const Opportunity = require("../models/opportunity");
 
 const createOpportunity = async (req, res) => {
-    const { title, date, location, description, organizationId } = req.body;
+    const { title, date, address, description, organizationId } = req.body;
     const opportunity = new Opportunity({
         title,
         date,
-        location,
+        address,
         description,
         organizationId
     });
@@ -41,11 +41,11 @@ const getOpportunity = async (req, res) => {
 };
 
 const updateOpportunity = async (req, res) => {
-    const { title, date, location, description, organizationId } = req.body;
+    const { title, date, address, description, organizationId } = req.body;
     try {
         const opportunity = await Opportunity.findByIdAndUpdate(
             req.params.id,
-            { $set: { title, date, location, description, organizationId } },
+            { $set: { title, date, address, description, organizationId } },
             { new: true }
         );
         if (!opportunity) return res.status(404).json({ message: "Opportunity not found" });
