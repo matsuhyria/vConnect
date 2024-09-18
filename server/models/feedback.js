@@ -27,3 +27,6 @@ const feedack = new Schema({
         maxlength: 500 
     } 
 });
+
+const Feedback = mongoose.model('Feedback', feedbackSchema);
+module.exports = Feedback;
