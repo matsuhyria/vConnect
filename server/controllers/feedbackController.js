@@ -1,6 +1,6 @@
 const Feedback = require('../models/feedback');
 const User = require('../models/user');
-//const Opportunity = require('../models/opportunity');
+const Opportunity = require('../models/opportunity');
 
 const createFeedback = async (req, res) => {
     const { opportunity_id } = req.params;
@@ -8,7 +8,7 @@ const createFeedback = async (req, res) => {
 
     try {
         // Check if the user and opportunity exist
-        const existingUser = await User.findById(user);
+        const existingUser = await User.findById(user_id);
         const existingOpportunity = await Opportunity.findById(opportunity_id);
 
         if (!existingUser || !existingOpportunity) {
@@ -16,7 +16,7 @@ const createFeedback = async (req, res) => {
         }
 
         const feedback = new Feedback({
-            user,
+            user: user_id,
             opportunity: opportunity_id,
             rating,
             comment,
@@ -101,13 +101,10 @@ const updateFeedbackById = async (req, res) => {
 };
 
 const deleteFeedbackById = async (req, res) => {
-    const { opportunity_id, feedback_id } = req.params;
+    const { feedback_id } = req.params;
 
     try {
-        const feedback = await Feedback.findOneAndDelete({
-            _id: feedback_id,
-            opportunity: opportunity_id
-        });
+        const feedback = await Feedback.findByIdAndDelete(feedback_id);
 
         if (!feedback) {
             return res.status(404).json({ error: 'Feedback not found' });
