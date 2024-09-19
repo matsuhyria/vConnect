@@ -22,3 +22,5 @@ const registration = new Schema({
         default: 'pending' 
     }
 });
+
+module.exports = mongoose.model("Registration", registration);

@@ -1,5 +1,5 @@
 const Registration = require('../models/registration');
-//const Opportunity = require('../models/opportunity');
+const Opportunity = require('../models/opportunity');
 const User = require('../models/user');
 
 const createRegistration = async (req, res) => {
@@ -68,11 +68,10 @@ const getRegistrationById = async (req, res) => {
 };
 
 const updateRegistrationById = async (req, res) => {
-    const { user_id, opportunity_id, id } = req.params;
 
     try {
-        const registration = await Registration.findOneAndUpdate(
-            { _id: id, user: user_id, opportunity: opportunity_id },
+        const registration = await Registration.findByIdAndUpdate(
+            req.params.id, 
             { $set: req.body },
             { new: true }
         );
@@ -92,14 +91,9 @@ const updateRegistrationById = async (req, res) => {
 };
 
 const deleteRegistrationById = async (req, res) => {
-    const { user_id, opportunity_id, id } = req.params;
 
     try {
-        const registration = await Registration.findOneAndDelete({
-            _id: id,
-            user: user_id,
-            opportunity: opportunity_id
-        });
+        const registration = await Registration.findByIdAndDelete(req.params.id);
 
         if (!registration) {
             return res.status(404).json({ error: 'Registration not found' });
