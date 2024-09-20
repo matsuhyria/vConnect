@@ -8,6 +8,7 @@ var userRoutes = require('./routes/userRoutes');
 var orgRoutes = require('./routes/organizationRoutes');
 var opportunityRoutes = require('./routes/opportunityRoutes');
 var feedbackRoutes = require('./routes/feedbackRoutes');
+var registrationRoutes = require('./routes/registrationRoutes');
 
 // Variables
 var mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/volunteerconnect_db';
@@ -42,6 +43,7 @@ app.use(userRoutes);
 app.use(orgRoutes);
 app.use(opportunityRoutes);
 app.use(feedbackRoutes);
+app.use(registrationRoutes);
 
 // Catch all non-error handler for api (i.e., 404 Not Found)
 app.use('/api/*', function (req, res) {
