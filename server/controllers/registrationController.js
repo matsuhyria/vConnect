@@ -43,15 +43,10 @@ const getAllRegistrations = async (req, res) => {
 };
 
 const getRegistrationById = async (req, res) => {
-    const { user_id, opportunity_id, id } = req.params;
+    const { id } = req.params;
 
     try {
-        //maybe change to findById(id)
-        const registration = await Registration.findOne({
-            _id: id,
-            user: user_id,
-            opportunity: opportunity_id
-        });
+        const registration = await Registration.findById(id);
 
         if (!registration) {
             return res.status(404).json({ error: 'Registration not found' });
@@ -68,10 +63,11 @@ const getRegistrationById = async (req, res) => {
 };
 
 const updateRegistrationById = async (req, res) => {
+    const { id } = req.params;
 
     try {
         const registration = await Registration.findByIdAndUpdate(
-            req.params.id, 
+             id,
             { $set: req.body },
             { new: true }
         );
@@ -91,9 +87,10 @@ const updateRegistrationById = async (req, res) => {
 };
 
 const deleteRegistrationById = async (req, res) => {
+    const { id } = req.params;
 
     try {
-        const registration = await Registration.findByIdAndDelete(req.params.id);
+        const registration = await Registration.findOneAndDelete(id);
 
         if (!registration) {
             return res.status(404).json({ error: 'Registration not found' });

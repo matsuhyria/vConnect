@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema; 
 
-const registration = new Schema({
+const feedback = new Schema({
     user: { 
         type: Schema.Types.ObjectId, 
         ref: 'User', 
-        required: true
+        required: true 
     },
     opportunity: { 
         type: Schema.Types.ObjectId, 
@@ -16,11 +16,17 @@ const registration = new Schema({
         type: Date, 
         default: Date.now 
     },
-    status: { 
+    rating: { 
+        type: Number, 
+        required: true, 
+        min: 1, 
+        max: 5 
+    },  
+    comment: { 
         type: String, 
-        enum: ['pending', 'confirmed', 'canceled'], 
-        default: 'pending' 
-    }
+        maxlength: 500 
+    } 
 });
 
-module.exports = mongoose.model('Registration', registration);
+const Feedback = mongoose.model('Feedback', feedback);
+module.exports = Feedback;
