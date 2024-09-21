@@ -3,11 +3,14 @@ const router = express.Router();
 
 const { createOrganization, getAllOrganizations, getOrganizationById, updateOrganizationById, deleteOrganizationById } = require('../controllers/organizationController');
 
-router.post('/api/v1/organizations', createOrganization);
-router.get('/api/v1/organizations', getAllOrganizations);
-router.get('/api/v1/organizations/:id', getOrganizationById);
-router.patch('/api/v1/organizations/:id', updateOrganizationById);
-router.put('/api/v1/organizations/:id', updateOrganizationById);
-router.delete('/api/v1/organizations/:id', deleteOrganizationById);
+router.route('/api/v1/organizations')
+    .post(createOrganization)
+    .get(getAllOrganizations);
+
+router.route('/api/v1/organizations/:id')
+    .get(getOrganizationById)
+    .patch(updateOrganizationById)
+    .put(updateOrganizationById)
+    .delete(deleteOrganizationById);
 
 module.exports = router;
