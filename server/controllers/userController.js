@@ -4,12 +4,12 @@ const saltRounds = 10;
 const User = require("../models/user");
 
 const createUser = async (req, res) => {
-    const { name, email, password, type } = req.body;
-    const encryptedPassword = await bcrypt.hash(password.toString(), saltRounds);
-    const user = new User({
-        name, email, password: encryptedPassword, type
-    });
     try {
+        const { name, email, password, type } = req.body;
+        const encryptedPassword = await bcrypt.hash(password.toString(), saltRounds);
+        const user = new User({
+            name, email, password: encryptedPassword, type
+        });
         await user.save();
         return res.json({ message: "User created!", user });
     } catch (err) {
@@ -24,7 +24,7 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        const isMatch = user.password == password; // @TODO use bcrypt
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
         res.json({ message: "Login successful", user });  // @TODO use jwt
