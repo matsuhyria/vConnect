@@ -1,18 +1,18 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var morgan = require('morgan');
-var path = require('path');
-var cors = require('cors');
-var history = require('connect-history-api-fallback');
-var userRoutes = require('./routes/userRoutes');
-var orgRoutes = require('./routes/organizationRoutes');
-var opportunityRoutes = require('./routes/opportunityRoutes');
-var feedbackRoutes = require('./routes/feedbackRoutes');
-var registrationRoutes = require('./routes/registrationRoutes');
+const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const path = require('path');
+const cors = require('cors');
+const history = require('connect-history-api-fallback');
+const userRoutes = require('./routes/userRoutes');
+const orgRoutes = require('./routes/organizationRoutes');
+const opportunityRoutes = require('./routes/opportunityRoutes');
+const feedbackRoutes = require('./routes/feedbackRoutes');
+const registrationRoutes = require('./routes/registrationRoutes');
 
 // Variables
-var mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/volunteerconnect_db';
-var port = process.env.PORT || 3000;
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/volunteerconnect_db';
+const port = process.env.PORT || 3000;
 
 // Connect to MongoDB
 mongoose.connect(mongoURI).catch(function (err) {
@@ -24,7 +24,7 @@ mongoose.connect(mongoURI).catch(function (err) {
 });
 
 // Create Express app
-var app = express();
+const app = express();
 // Parse requests of content-type 'application/json'
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -54,16 +54,16 @@ app.use('/api/*', function (req, res) {
 // Support Vuejs HTML 5 history mode
 app.use(history());
 // Serve static assets
-var root = path.normalize(__dirname + '/..');
-var client = path.join(root, 'client', 'dist');
+const root = path.normalize(__dirname + '/..');
+const client = path.join(root, 'client', 'dist');
 app.use(express.static(client));
 
 // Error handler (i.e., when exception is thrown) must be registered last
-var env = app.get('env');
+const env = app.get('env');
 // eslint-disable-next-line no-unused-vars
 app.use(function (err, req, res, next) {
     console.error(err.stack);
-    var err_res = {
+    const err_res = {
         'message': err.message,
         'error': {}
     };
