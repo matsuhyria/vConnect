@@ -3,17 +3,15 @@ const router = express.Router();
 
 const { createOpportunity, getOpportunities, getOpportunity, updateOpportunity, deleteOpportunity } = require("../controllers/opportunityController");
 
-router.post("/api/v1/opportunities", createOpportunity);
+router.route('/api/v1/opportunities')
+    .post(createOpportunity)
+    .get(getOpportunities);
 
-router.get("/api/v1/opportunities", getOpportunities);
-
-router.get("/api/v1/opportunities/:id", getOpportunity);
-
-router.put("/api/v1/opportunities/:id", updateOpportunity);
-
-router.patch("/api/v1/opportunities/:id", updateOpportunity);
-
-router.delete("/api/v1/opportunities/:id", deleteOpportunity);
+router.route('/api/v1/opportunities/:id')
+    .get(getOpportunity)
+    .put(updateOpportunity)
+    .patch(updateOpportunity)
+    .delete(deleteOpportunity);
 
 
 module.exports = router;
