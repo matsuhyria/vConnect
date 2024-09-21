@@ -46,11 +46,12 @@ const getUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    const { name, email, password, type } = req.body;
     try {
+        const { name, email, password, type } = req.body;
+        const encryptedPassword = await bcrypt.hash(password.toString(), saltRounds);
         const user = await User.findByIdAndUpdate(
             req.params.id,
-            { $set: { name, email, password, type } },
+            { $set: { name, email, password: encryptedPassword, type } },
             { new: true }
         );
         if (!user) return res.status(404).json({ message: "User not found" });
