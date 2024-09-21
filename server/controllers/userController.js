@@ -1,9 +1,13 @@
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const User = require("../models/user");
 
 const createUser = async (req, res) => {
     const { name, email, password, type } = req.body;
+    const encryptedPassword = await bcrypt.hash(password.toString(), saltRounds);
     const user = new User({
-        name, email, password, type
+        name, email, password: encryptedPassword, type
     });
     try {
         await user.save();
