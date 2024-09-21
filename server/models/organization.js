@@ -29,6 +29,9 @@ const orgSchema = new Schema({
     }
 });
 
+orgSchema.index({ name: 1 });
+orgSchema.index({ managed_by: 1 });
+
 const Organization = mongoose.model('Organization', orgSchema);
 
 module.exports = Organization;

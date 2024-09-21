@@ -21,8 +21,11 @@ const opportunitySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Organization',
         required: true,
-    }
+    },
 });
 
+opportunitySchema.index({ date: 1 });
+opportunitySchema.index({ status: 1 });
+opportunitySchema.index({ organizationId: 1 });
 
 module.exports = mongoose.model("Opportunity", opportunitySchema);
