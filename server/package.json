@@ -11,11 +11,11 @@
     "start": "node ./app.js",
     "dev": "nodemon --env-file=.env ./app.js",
     "lint": "eslint .",
-    "test": "cross-env-shell MONGODB_URI=mongodb://localhost:27017/serverTestDB \"npm run newman-server\"",
+    "test": "npm run newman-server",
     "ci-test": "npm run newman-server",
-    "newman-server": "cross-env-shell PORT=3001 \"npm run dropdb && run-p --race start newman-wait\"",
-    "newman-wait": "wait-on http://localhost:3001/api && npm run newman",
-    "newman": "newman run ./tests/server.postman_collection.json --env-var host=http://localhost:3001",
+    "newman-server": "cross-env-shell PORT=3000 \"npm run dropdb && run-p --race start newman-wait\"",
+    "newman-wait": "wait-on http://localhost:3000/api && npm run newman",
+    "newman": "newman run ./tests/vc.postman.collection.json --env-var host=http://localhost:3000",
     "dropdb": "node ./tests/dropdb.js"
   },
   "repository": {
@@ -27,6 +27,7 @@
     "body-parser": "^1.20.2",
     "connect-history-api-fallback": "^2.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.5.4",
     "morgan": "^1.10.0"

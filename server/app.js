@@ -11,6 +11,7 @@ const feedbackRoutes = require('./routes/feedbackRoutes');
 const registrationRoutes = require('./routes/registrationRoutes');
 
 // Variables
+require('dotenv').config();
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/volunteerconnect_db';
 const port = process.env.PORT || 3000;
 
