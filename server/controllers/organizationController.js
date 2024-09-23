@@ -5,7 +5,7 @@ const createOrganization = async (req, res) => {
         const organization = new Organization(req.body);
         const savedOrg = await organization.save();
 
-        res.status(201).json(savedOrg);
+        res.status(201).json({ message: "Organization created!", savedOrg });
     } catch(err) {
         console.log(err);
         res.status(500).json({ error: err.message });
