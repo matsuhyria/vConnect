@@ -16,11 +16,11 @@ router.route('/api/v1/users/:user_id/opportunities/:opportunity_id/registrations
 
 router.route('/api/v1/users/:user_id/opportunities/:opportunity_id/registrations/:id')
     .patch(updateRegistrationById)
-    .put(updateRegistrationById)
-    .delete(deleteRegistrationById);
 
 router.route('/api/v1/registrations/:id')
-    .get(getRegistrationById);
+    .get(getRegistrationById)
+    .put(updateRegistrationById)
+    .delete(deleteRegistrationById);
 
 router.route('/api/v1/opportunities/:id/registrations')
     .get(getRegistrationByOppId);
