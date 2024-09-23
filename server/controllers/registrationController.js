@@ -62,6 +62,26 @@ const getRegistrationById = async (req, res) => {
     }
 };
 
+const getRegistrationByOppId = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const registration = await Registration.find({ opportunity: id });
+
+        if (!registration) {
+            return res.status(404).json({ error: 'Registration for this opportunity not found' });
+        }
+
+        res.status(200).json(registration);
+    } catch (err) {
+        if (err.kind === 'ObjectId') {
+            return res.status(400).json({ error: 'Invalid opportunity ID' });
+        }
+        console.log(err);
+        return res.status(500).json({ error: 'Failed to retrieve registration' });
+    }
+};
+
 const updateRegistrationById = async (req, res) => {
     const { id } = req.params;
 
@@ -110,6 +130,7 @@ module.exports = {
     createRegistration,
     getAllRegistrations,
     getRegistrationById,
+    getRegistrationByOppId,
     updateRegistrationById,
     deleteRegistrationById
 };

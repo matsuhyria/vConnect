@@ -5,6 +5,7 @@ const {
     createRegistration,
     getAllRegistrations,
     getRegistrationById,
+    getRegistrationByOppId,
     updateRegistrationById,
     deleteRegistrationById
 } = require('../controllers/registrationController');
@@ -20,6 +21,8 @@ router.route('/api/v1/users/:user_id/opportunities/:opportunity_id/registrations
 
 router.route('/api/v1/registrations/:id')
     .get(getRegistrationById);
-        
+
+router.route('/api/v1/opportunities/:id/registrations')
+    .get(getRegistrationByOppId);
 
 module.exports = router;
