@@ -1,4 +1,5 @@
 const Opportunity = require("../models/opportunity");
+const Organization = require("../models/organization")
 
 const createOpportunity = async (req, res) => {
     const { title, date, address, description, organizationId } = req.body;
@@ -40,6 +41,18 @@ const getOpportunity = async (req, res) => {
     }
 };
 
+
+const getOpportunitiesByOrg = async (req, res) => {
+    try {
+        const opportunity = await Opportunity.find({ organizationId: req.params.id }); 
+        if (!opportunity) return res.status(404).json({ message: "Opportunities for this organization not found" });
+        res.json(opportunity);
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({ message: 'Server Error', err });
+    }
+};
+
 const updateOpportunity = async (req, res) => {
     const { title, date, address, description, organizationId } = req.body;
     try {
@@ -67,4 +80,4 @@ const deleteOpportunity = async (req, res) => {
     }
 };
 
-module.exports = { createOpportunity, getOpportunities, getOpportunity, updateOpportunity, deleteOpportunity };
+module.exports = { createOpportunity, getOpportunities, getOpportunity, getOpportunitiesByOrg, updateOpportunity, deleteOpportunity };

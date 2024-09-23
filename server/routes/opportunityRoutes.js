@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { createOpportunity, getOpportunities, getOpportunity, updateOpportunity, deleteOpportunity } = require("../controllers/opportunityController");
+const { createOpportunity, getOpportunities, getOpportunity, getOpportunitiesByOrg, updateOpportunity, deleteOpportunity } = require("../controllers/opportunityController");
 
 router.route('/api/v1/opportunities')
     .post(createOpportunity)
@@ -13,5 +13,7 @@ router.route('/api/v1/opportunities/:id')
     .patch(updateOpportunity)
     .delete(deleteOpportunity);
 
+router.route('/api/v1/organizations/:id/opportunities')
+    .get(getOpportunitiesByOrg);
 
 module.exports = router;
