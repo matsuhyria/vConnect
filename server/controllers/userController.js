@@ -27,6 +27,11 @@ const loginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
+        const session = { id: user.id }
+        res.cookie('session', bcrypt.hashSync(JSON.stringify(session), saltRounds), {
+            httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 24 * 60 * 60 * 1000 // 24 hour in milliseconds
+        });
+
         res.status(200).json({ message: "Login successful", user });  // @TODO use jwt
     } catch (err) {
         console.error(err)
