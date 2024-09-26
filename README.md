@@ -75,13 +75,11 @@ The system aims to facilitate the management of volunteer efforts, ensuring that
 * Opportunity Listing (Public): A list of available volunteering opportunities for users to browse.
 * Opportunity Details (Public): Detailed view of a selected opportunity with event-specific information.
 * Profile: A volunteer’s personal page for managing their details and viewing history.
-* Feedback: Allows volunteers to leave feedback after participating in an event.
 
 **Organizations:**
 
 * Listing  (Public)
-* Dashboard: organizations to manage their events and volunteers
-* Opportunity Management: Manage events that belongs to this organization.
+* Create Opportunity: Create a new opportunity.
 * Organization Profile (Public): Showcasing organization's mission and events
 
 **Common:**
