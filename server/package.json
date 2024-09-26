@@ -8,15 +8,15 @@
   "description": "Template for ExpressJS API with Mongoose for Web and Mobile Engineering (DIT342)",
   "main": "./app.js",
   "scripts": {
-    "start": "node ./app.js",
+    "start": "node -r dotenv/config ./app.js",
     "dev": "nodemon --env-file=.env ./app.js",
     "lint": "eslint .",
     "test": "npm run newman-server",
     "ci-test": "npm run newman-server",
     "newman-server": "cross-env-shell PORT=3000 \"npm run dropdb && run-p --race start newman-wait\"",
     "newman-wait": "wait-on http://localhost:3000/api && npm run newman",
-    "newman": "newman run ./tests/vc.postman.collection.json --env-var host=http://localhost:3000",
-    "dropdb": "node ./tests/dropdb.js"
+    "newman": "newman run ./tests/server.postman_collection.json --env-var host=http://localhost:3000",
+    "dropdb": "node -r dotenv/config ./tests/dropdb.js"
   },
   "repository": {
     "type": "git",
@@ -27,13 +27,13 @@
     "body-parser": "^1.20.2",
     "connect-history-api-fallback": "^2.0.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.5.4",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
     "newman": "^6.2.1",
     "nodemon": "^3.1.4",
     "npm-run-all": "^4.1.5",
