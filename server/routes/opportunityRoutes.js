@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { createOpportunity, getOpportunities, getOpportunity, getOpportunitiesByOrg, updateOpportunity, deleteOpportunity } = require("../controllers/opportunityController");
+const { createOpportunity, getPaginatedOpportunities, getOpportunity, getOpportunitiesByOrg, updateOpportunity, deleteOpportunity } = require("../controllers/opportunityController");
 
 router.route('/api/v1/opportunities')
     .post(createOpportunity)
-    .get(getOpportunities);
+    .get(getPaginatedOpportunities);
 
 router.route('/api/v1/opportunities/:id')
     .get(getOpportunity)
