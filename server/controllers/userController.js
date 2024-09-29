@@ -1,7 +1,9 @@
+const { NODE_ENV, TOKEN_COOKIE_NAME } = require('../helpers/constants');
+const { generateToken } = require('../helpers/jwt');
+const User = require("../models/user");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
-const User = require("../models/user");
+const tokenMaxAge = 24 * 60 * 60 * 1000; // 24 hour in milliseconds
 
 const createUser = async (req, res) => {
     try {
@@ -10,7 +12,17 @@ const createUser = async (req, res) => {
         const user = new User({
             name, email, password: encryptedPassword, type
         });
+
         await user.save();
+
+        // Generate JWT token
+        const token = generateToken({ userId: user._id, email, type: user.type });
+
+        // Save JWT token to cookie
+        res.cookie(TOKEN_COOKIE_NAME, token, {
+            httpOnly: true, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
+        });
+
         res.status(201).json({ message: "User created!", user });
     } catch (err) {
         console.error(err)
@@ -27,17 +39,26 @@ const loginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-        const session = { id: user.id }
-        res.cookie('session', bcrypt.hashSync(JSON.stringify(session), saltRounds), {
-            httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 24 * 60 * 60 * 1000 // 24 hour in milliseconds
+        // Generate JWT token
+        const token = generateToken({ userId: user._id, email, type: user.type });
+
+        // Save JWT token to cookie
+        res.cookie(TOKEN_COOKIE_NAME, token, {
+            httpOnly: true, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
         });
 
-        res.status(200).json({ message: "Login successful", user });  // @TODO use jwt
+        res.status(200).json({ message: "Login successful", user });
     } catch (err) {
         console.error(err)
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
+
+const logoutUser = async (req, res) => {
+    // Clear cookie
+    res.clearCookie(TOKEN_COOKIE_NAME);
+    res.status(200).json({ message: "Logged out successfully!" });
+}
 
 const getUser = async (req, res) => {
     try {
@@ -60,6 +81,15 @@ const updateUser = async (req, res) => {
             { new: true }
         );
         if (!user) return res.status(404).json({ message: "User not found" });
+
+        // Generate JWT token
+        const token = generateToken({ userId: user._id, email, type: user.type });
+
+        // Save JWT token to cookie
+        res.cookie('token', token, {
+            httpOnly: true, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
+        });
+
         res.status(200).json(user);
     } catch (err) {
         console.error(err)
@@ -78,4 +108,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { createUser, loginUser, getUser, updateUser, deleteUser };
+module.exports = { createUser, loginUser, logoutUser, getUser, updateUser, deleteUser };

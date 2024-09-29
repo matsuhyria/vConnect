@@ -6,7 +6,7 @@ const createOrganization = async (req, res) => {
         const savedOrg = await organization.save();
 
         res.status(201).json({ message: "Organization created!", savedOrg });
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         res.status(500).json({ error: err.message });
     }
@@ -27,7 +27,7 @@ const getOrganizationById = async (req, res) => {
     try {
         const organization = await Organization.findById(id);
 
-        if(!organization) {
+        if (!organization) {
             return res.status(404).json({ error: 'Organization not found' });
         }
 
@@ -43,19 +43,19 @@ const getOrganizationById = async (req, res) => {
 
 const updateOrganizationById = async (req, res) => {
     const { id } = req.params;
-    const { name, description, managed_by, email, address, rating} = req.body;
+    const { name, description, managed_by, email, address, rating } = req.body;
 
     try {
         const organization = await Organization.findByIdAndUpdate(
-            id, 
-            { $set: { name, description, managed_by, email, address, rating} }, // consider updating the rating
-            { new: true }
-        ); // new: true is needed to get the updated object 
-        
-        if(!organization) {
+            id,
+            { $set: { name, description, managed_by, email, address, rating } },
+            { new: true } // new: true is needed to get the updated object 
+        );
+
+        if (!organization) {
             res.status(404).json({ error: 'Organization not found' });
         }
-        
+
         res.status(200).json(organization);
     } catch (err) {
         if (err.kind === 'ObjectId') {
@@ -68,14 +68,14 @@ const updateOrganizationById = async (req, res) => {
 
 const deleteOrganizationById = async (req, res) => {
     const { id } = req.params;
-    
+
     try {
         const organization = await Organization.findByIdAndDelete(id);
 
         if (!organization) {
             return res.status(404).json({ error: 'Organization not found' });
         }
-        
+
         res.status(200).json({ message: 'Organization deleted successfully' });
     } catch (err) {
         if (err.kind === 'ObjectId') {
@@ -86,4 +86,4 @@ const deleteOrganizationById = async (req, res) => {
     }
 };
 
-module.exports = { createOrganization, getAllOrganizations, getOrganizationById, updateOrganizationById, deleteOrganizationById};
+module.exports = { createOrganization, getAllOrganizations, getOrganizationById, updateOrganizationById, deleteOrganizationById };
