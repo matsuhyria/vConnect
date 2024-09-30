@@ -21,7 +21,7 @@ const createOrganization = async (req, res) => {
 
         res.status(201).json({ message: "Organization created!", organization });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ error: err.message });
     }
 };
@@ -50,7 +50,7 @@ const getOrganizationById = async (req, res) => {
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid organization ID' });
         }
-        console.log(err);
+        console.error(err);
         return res.status(500).json({ error: 'Failed to retreive organization by id' });
     }
 };
@@ -75,7 +75,7 @@ const updateOrganizationById = async (req, res) => {
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid organization ID' });
         }
-        console.log(err);
+        console.error(err);
         return res.status(500).json({ error: 'Failed to update organization' });
     }
 };
@@ -95,7 +95,7 @@ const deleteOrganizationById = async (req, res) => {
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid organization ID' });
         }
-        console.log(err);
+        console.error(err);
         res.status(500).json({ error: 'Failed to delete organization' });
     }
 };

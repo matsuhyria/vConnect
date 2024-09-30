@@ -21,7 +21,7 @@ const createRegistration = async (req, res) => {
 
         res.status(201).json({ message: "Registration has been created", registration });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ error: err.message });
     }
 };
@@ -61,7 +61,7 @@ const getRegistrationsPerOpportunity = async (req, res) => {
 
         res.status(200).json(registration);
     } catch (err) {
-        console.log(err);
+        console.error(err);
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid opportunity ID' });
         }
@@ -81,7 +81,7 @@ const updateRegistrationById = async (req, res) => {
 
         res.status(200).json(registration);
     } catch (err) {
-        console.log(err);
+        console.error(err);
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid registration ID' });
         }
@@ -97,7 +97,7 @@ const deleteRegistrationById = async (req, res) => {
 
         res.status(200).json({ message: 'Registration deleted successfully', registration });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid registration ID' });
         }

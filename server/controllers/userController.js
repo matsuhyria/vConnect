@@ -18,12 +18,7 @@ const createUser = async (req, res) => {
         // Generate JWT token
         const token = generateToken({ userId: user._id, email, type: user.type });
 
-        // Save JWT token to cookie
-        res.cookie(TOKEN_COOKIE_NAME, token, {
-            httpOnly: false, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
-        });
-
-        res.status(201).json({ message: "User created!", user });
+        res.status(201).json({ token, user: { id: user._id, email: user.email, type: user.type } });
     } catch (err) {
         console.error(err)
         return res.status(400).send({ message: err.message });
@@ -42,23 +37,12 @@ const loginUser = async (req, res) => {
         // Generate JWT token
         const token = generateToken({ userId: user._id, email, type: user.type });
 
-        // Save JWT token to cookie
-        res.cookie(TOKEN_COOKIE_NAME, token, {
-            httpOnly: false, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
-        });
-
-        res.status(200).json({ message: "Login successful", user });
+        res.status(200).json({ message: "Login successful", token, user: { id: user._id, email: user.email, type: user.type } });
     } catch (err) {
         console.error(err)
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
-
-const logoutUser = async (req, res) => {
-    // Clear cookie
-    res.clearCookie(TOKEN_COOKIE_NAME);
-    res.status(200).json({ message: "Logged out successfully!" });
-}
 
 const getUser = async (req, res) => {
     try {
@@ -85,12 +69,7 @@ const updateUser = async (req, res) => {
         // Generate JWT token
         const token = generateToken({ userId: user._id, email, type: user.type });
 
-        // Save JWT token to cookie
-        res.cookie('token', token, {
-            httpOnly: false, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
-        });
-
-        res.status(200).json(user);
+        res.status(200).json({ message: "Update successful", token, user: { id: user._id, email: user.email, type: user.type } });
     } catch (err) {
         console.error(err)
         return res.status(500).json({ message: 'Server Error', err });
@@ -108,4 +87,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { createUser, loginUser, logoutUser, getUser, updateUser, deleteUser };
+module.exports = { createUser, loginUser, getUser, updateUser, deleteUser };

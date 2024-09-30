@@ -17,15 +17,12 @@ const verifyOrganizationManager = require("../middlewares/auth/verifyOrganizatio
 router.route(`${BASE_PATH}/opportunities`)
     // Get all opportunities
     .get(getOpportunities)
-    // Create a new opportunity
-    .post(
-        verifyAccess({ requiredType: 'organization_representative' }),
-        verifyOrganizationManager(),
-        createOpportunity
-    );
 
-// Define route parameters and HTTP methods for individual opportunities.
 router.route(`${BASE_PATH}/opportunities/:id`)
+    // Get an existing opportunity by ID
+    .get(getOpportunity)
+
+router.route(`${BASE_PATH}/organizations/:organizationId/opportunities/:id`)
     // Get an existing opportunity by ID
     .get(getOpportunity)
     // Update an existing opportunity
@@ -47,10 +44,16 @@ router.route(`${BASE_PATH}/opportunities/:id`)
         deleteOpportunity
     );
 
-// Define route for getting opportunities by organization.
-router.route(`${BASE_PATH}/organizations/:id/opportunities`)
-    // Get all opportunities for a specific organization
-    .get(getOpportunitiesPerOrganization);
 
+// Define route parameters and HTTP methods for individual opportunities.
+router.route(`${BASE_PATH}/organizations/:organizationId/opportunities`)
+    // Get all opportunities for a specific organization
+    .get(getOpportunitiesPerOrganization)
+    // Create a new opportunity
+    .post(
+        verifyAccess({ requiredType: 'organization_representative' }),
+        verifyOrganizationManager(),
+        createOpportunity
+    )
 
 module.exports = router;

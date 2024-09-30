@@ -4,7 +4,7 @@ const Organization = require("../../models/organization")
 const verifyOrganizationManager = () => {
     return async (req, res, next) => {
         try {
-            const organizationId = req.body.organizationId || req.params.id;
+            const organizationId = req.body.organizationId || req.params.organizationId || req.params.id;
             const userId = req.user.userId;
 
             const organization = await Organization.findById(organizationId);

@@ -14,9 +14,6 @@ const verifyRegistrationOwnership = () => {
                 return res.status(404).json({ message: 'Registration not found' });
             }
 
-            console.log(registration.user, (req.user.userId));
-
-
             if (!registration.user.equals(req.user.userId)) {
                 return res.status(403).json({ message: 'Access Denied: Insufficient Permissions' });
             }

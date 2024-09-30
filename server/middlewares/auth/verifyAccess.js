@@ -5,15 +5,14 @@ const { verifyToken } = require("../../helpers/jwt");
 const verifyAccess = ({ requiredType = null, checkOwnUser = false } = {}) => {
     return (req, res, next) => {
 
-        if (!req.headers.cookie) {
-            return res.status(401).send('Access denied: No token provided');
+        const authHeader = req.headers.authorization;
+
+        // Check if Authorization header exists
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ message: 'Authorization header is missing.' });
         }
 
-        const token = req.headers.cookie.slice(`${TOKEN_COOKIE_NAME}=`.length); // Get the token from cookies
-
-        if (!token) {
-            return res.status(401).send('Access denied: No token provided');
-        }
+        const token = authHeader.split(' ')[1];
 
         try {
             req.user = verifyToken(token); // Attach the decoded user information to the request
@@ -22,6 +21,7 @@ const verifyAccess = ({ requiredType = null, checkOwnUser = false } = {}) => {
             if (requiredType && req.user.type !== requiredType) {
                 return res.status(403).json({ message: 'Access Denied: Insufficient Permissions' });
             }
+
 
             // Check ownership if required
             if (checkOwnUser && req.params.id && req.params.id !== req.user.userId) {
