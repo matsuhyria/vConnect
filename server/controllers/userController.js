@@ -20,7 +20,7 @@ const createUser = async (req, res) => {
 
         // Save JWT token to cookie
         res.cookie(TOKEN_COOKIE_NAME, token, {
-            httpOnly: true, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
+            httpOnly: false, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
         });
 
         res.status(201).json({ message: "User created!", user });
@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
 
         // Save JWT token to cookie
         res.cookie(TOKEN_COOKIE_NAME, token, {
-            httpOnly: true, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
+            httpOnly: false, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
         });
 
         res.status(200).json({ message: "Login successful", user });
@@ -87,7 +87,7 @@ const updateUser = async (req, res) => {
 
         // Save JWT token to cookie
         res.cookie('token', token, {
-            httpOnly: true, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
+            httpOnly: false, secure: NODE_ENV === 'production', maxAge: tokenMaxAge
         });
 
         res.status(200).json(user);

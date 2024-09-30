@@ -17,8 +17,9 @@ const createRegistration = async (req, res) => {
             opportunity: id,
         });
 
-        const savedRegistration = await registration.save();
-        res.status(201).json({ message: "Registration has been created", savedRegistration });
+        await registration.save();
+
+        res.status(201).json({ message: "Registration has been created", registration });
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: err.message });

@@ -23,8 +23,9 @@ const createFeedback = async (req, res) => {
             registrationDate: Date.now()
         });
 
-        const savedFeedback = await feedback.save();
-        res.status(201).json(savedFeedback);
+        await feedback.save();
+        
+        res.status(201).json(feedback);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err.message });

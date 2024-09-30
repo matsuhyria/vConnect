@@ -1,11 +1,25 @@
 const Organization = require('../models/organization');
 
 const createOrganization = async (req, res) => {
+    const { name,
+        email,
+        address,
+        phone,
+        description,
+        rating } = req.body;
     try {
-        const organization = new Organization(req.body);
-        const savedOrg = await organization.save();
+        const organization = new Organization({
+            name,
+            email,
+            address,
+            phone,
+            managed_by: req.user.userId,
+            description,
+            rating
+        });
+        await organization.save();
 
-        res.status(201).json({ message: "Organization created!", savedOrg });
+        res.status(201).json({ message: "Organization created!", organization });
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: err.message });

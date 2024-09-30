@@ -13,7 +13,7 @@ const verifyOrganizationManager = () => {
             }
 
             // Check if the user is the organization's manager
-            if (organization.managed_by.equals(userId)) {
+            if (!organization.managed_by.equals(userId)) {
                 return res.status(403).json({
                     message: 'You are not authorized to perform this action',
                 });

@@ -2,8 +2,12 @@ const { TOKEN_COOKIE_NAME } = require("../../helpers/constants");
 const { verifyToken } = require("../../helpers/jwt");
 
 // middleware for verifying token, roles, and ownership
-const verifyAccess = ({ requiredType = "volunteer", checkOwnUser = false } = {}) => {
+const verifyAccess = ({ requiredType = null, checkOwnUser = false } = {}) => {
     return (req, res, next) => {
+
+        if (!req.headers.cookie) {
+            return res.status(401).send('Access denied: No token provided');
+        }
 
         const token = req.headers.cookie.slice(`${TOKEN_COOKIE_NAME}=`.length); // Get the token from cookies
 
