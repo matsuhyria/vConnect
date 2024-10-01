@@ -1,8 +1,9 @@
 const Opportunity = require("../models/opportunity");
-const Organization = require("../models/organization")
 
 const createOpportunity = async (req, res) => {
-    const { title, date, address, description, organizationId } = req.body;
+    const { organizationId } = req.params;
+    const { title, date, address, description } = req.body;
+
     const opportunity = new Opportunity({
         title,
         date,
@@ -42,11 +43,12 @@ const getOpportunity = async (req, res) => {
 };
 
 
-const getOpportunitiesByOrg = async (req, res) => {
+const getOpportunitiesPerOrganization = async (req, res) => {
     try {
-        const opportunity = await Opportunity.find({ organizationId: req.params.id }); 
-        if (!opportunity) return res.status(404).json({ message: "Opportunities for this organization not found" });
-        res.status(200).json(opportunity);
+        const { organizationId } = req.params;
+        const opportunities = await Opportunity.find({ organizationId });
+        if (!opportunities) return res.status(404).json({ message: "Opportunities for this organization not found" });
+        res.status(200).json(opportunities);
     } catch (err) {
         console.error(err)
         return res.status(500).json({ message: 'Server Error', err });
@@ -54,8 +56,9 @@ const getOpportunitiesByOrg = async (req, res) => {
 };
 
 const updateOpportunity = async (req, res) => {
-    const { title, date, address, description, organizationId } = req.body;
     try {
+        const { organizationId } = req.params;
+        const { title, date, address, description } = req.body;
         const opportunity = await Opportunity.findByIdAndUpdate(
             req.params.id,
             { $set: { title, date, address, description, organizationId } },
@@ -80,4 +83,4 @@ const deleteOpportunity = async (req, res) => {
     }
 };
 
-module.exports = { createOpportunity, getOpportunities, getOpportunity, getOpportunitiesByOrg, updateOpportunity, deleteOpportunity };
+module.exports = { createOpportunity, getOpportunities, getOpportunity, getOpportunitiesPerOrganization, updateOpportunity, deleteOpportunity };

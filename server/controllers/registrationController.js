@@ -1,40 +1,43 @@
 const Registration = require('../models/registration');
 const Opportunity = require('../models/opportunity');
-const User = require('../models/user');
 
 const createRegistration = async (req, res) => {
-    const { user_id, opportunity_id } = req.params;
+    const { id } = req.params;
 
     try {
-        const user = await User.findById(user_id);
-        const opportunity = await Opportunity.findById(opportunity_id);
+        const opportunity = await Opportunity.findById(id);
 
-        if (!user || !opportunity) {
-            return res.status(404).json({ error: 'User or Opportunity not found' });
+        if (!opportunity) {
+            return res.status(404).json({ error: 'Opportunity not found' });
         }
 
         const registration = new Registration({
-            user: user_id,
-            opportunity: opportunity_id,
+            date: Date.now(),
+            user: req.user.userId,
+            opportunity: id,
         });
 
-        const savedRegistration = await registration.save();
-        res.status(201).json({ message: "Registration has been created", savedRegistration });
+        await registration.save();
+
+        res.status(201).json({ message: "Registration has been created", registration });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({ error: err.message });
     }
 };
 
-// get all regs for specific user
-const getAllRegistrations = async (req, res) => {
-    const { user_id, opportunity_id } = req.params;
+const getAllUserRegistrations = async (req, res) => {
+    const { id } = req.params;
 
     try {
         const registrations = await Registration.find({
-            user: user_id,
-            opportunity: opportunity_id
+            user: req.user.userId,
+            opportunity: id
         });
+
+        if (!registrations) {
+            return res.status(404).json({ error: 'Registrations not found' });
+        }
 
         res.status(200).json(registrations);
     } catch (err) {
@@ -43,26 +46,10 @@ const getAllRegistrations = async (req, res) => {
 };
 
 const getRegistrationById = async (req, res) => {
-    const { id } = req.params;
-
-    try {
-        const registration = await Registration.findById(id);
-
-        if (!registration) {
-            return res.status(404).json({ error: 'Registration not found' });
-        }
-
-        res.status(200).json(registration);
-    } catch (err) {
-        if (err.kind === 'ObjectId') {
-            return res.status(400).json({ error: 'Invalid registration ID' });
-        }
-        console.log(err);
-        return res.status(500).json({ error: 'Failed to retrieve registration' });
-    }
+    res.status(200).json(req.registration);
 };
 
-const getRegistrationByOppId = async (req, res) => {
+const getRegistrationsPerOpportunity = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -74,10 +61,10 @@ const getRegistrationByOppId = async (req, res) => {
 
         res.status(200).json(registration);
     } catch (err) {
+        console.error(err);
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid opportunity ID' });
         }
-        console.log(err);
         return res.status(500).json({ error: 'Failed to retrieve registration' });
     }
 };
@@ -87,21 +74,17 @@ const updateRegistrationById = async (req, res) => {
 
     try {
         const registration = await Registration.findByIdAndUpdate(
-             id,
+            id,
             { $set: req.body },
             { new: true }
         );
 
-        if (!registration) {
-            return res.status(404).json({ error: 'Registration not found' });
-        }
-
         res.status(200).json(registration);
     } catch (err) {
+        console.error(err);
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid registration ID' });
         }
-        console.log(err);
         return res.status(500).json({ error: 'Failed to update registration' });
     }
 };
@@ -112,25 +95,21 @@ const deleteRegistrationById = async (req, res) => {
     try {
         const registration = await Registration.findOneAndDelete(id);
 
-        if (!registration) {
-            return res.status(404).json({ error: 'Registration not found' });
-        }
-
-        res.status(200).json({ message: 'Registration deleted successfully' });
+        res.status(200).json({ message: 'Registration deleted successfully', registration });
     } catch (err) {
+        console.error(err);
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ error: 'Invalid registration ID' });
         }
-        console.log(err);
         res.status(500).json({ error: 'Failed to delete registration' });
     }
 };
 
 module.exports = {
     createRegistration,
-    getAllRegistrations,
+    getAllUserRegistrations,
     getRegistrationById,
-    getRegistrationByOppId,
+    getRegistrationsPerOpportunity,
     updateRegistrationById,
     deleteRegistrationById
 };

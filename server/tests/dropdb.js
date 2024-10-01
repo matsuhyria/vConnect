@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const { MONGODB_URI } = require('../helpers/constants');
 
 // Variables
-const mongoURI = process.env.MONGODB_URI;
+const mongoURI = MONGODB_URI;
 
 if (!mongoURI) {
     console.error('Missing MONGODB_URI for dropping test database.');
