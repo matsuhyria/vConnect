@@ -1,8 +1,9 @@
 const Opportunity = require("../models/opportunity");
-const Organization = require("../models/organization")
 
 const createOpportunity = async (req, res) => {
-    const { title, date, address, description, organizationId } = req.body;
+    const { organizationId } = req.params;
+    const { title, date, address, description } = req.body;
+
     const opportunity = new Opportunity({
         title,
         date,
@@ -14,7 +15,7 @@ const createOpportunity = async (req, res) => {
         await opportunity.save();
         return res.status(201).json({ message: "Opportunity created!", opportunity });
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(400).send({ message: err.message });
     }
 };
@@ -49,8 +50,8 @@ const getPaginatedOpportunities = async (req, res) => {
             totalPages: Math.ceil(itemsCount / limit),
             data: opportunities,
         });
-    } catch {
-        console.error(err)
+    } catch (err) {
+        console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
@@ -67,20 +68,22 @@ const getOpportunity = async (req, res) => {
 };
 
 
-const getOpportunitiesByOrg = async (req, res) => {
+const getOpportunitiesPerOrganization = async (req, res) => {
     try {
-        const opportunity = await Opportunity.find({ organizationId: req.params.id }); 
-        if (!opportunity) return res.status(404).json({ message: "Opportunities for this organization not found" });
-        res.status(200).json(opportunity);
+        const { organizationId } = req.params;
+        const opportunities = await Opportunity.find({ organizationId });
+        if (!opportunities) return res.status(404).json({ message: "Opportunities for this organization not found" });
+        res.status(200).json(opportunities);
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
 
 const updateOpportunity = async (req, res) => {
-    const { title, date, address, description, organizationId } = req.body;
     try {
+        const { organizationId } = req.params;
+        const { title, date, address, description } = req.body;
         const opportunity = await Opportunity.findByIdAndUpdate(
             req.params.id,
             { $set: { title, date, address, description, organizationId } },
@@ -89,7 +92,7 @@ const updateOpportunity = async (req, res) => {
         if (!opportunity) return res.status(404).json({ message: "Opportunity not found" });
         res.status(201).json(opportunity);
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
@@ -100,9 +103,9 @@ const deleteOpportunity = async (req, res) => {
         if (!opportunity) return res.status(404).json({ message: "Opportunity not found" });
         res.status(200).json({ message: "Opportunity deleted!", opportunity });
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
 
-module.exports = { createOpportunity, getPaginatedOpportunities, getOpportunity, getOpportunitiesByOrg, updateOpportunity, deleteOpportunity };
+module.exports = { createOpportunity, getPaginatedOpportunities, getOpportunity, getOpportunitiesPerOrganization, updateOpportunity, deleteOpportunity };
