@@ -27,19 +27,19 @@ router.route(`${BASE_PATH}/organizations/:organizationId/opportunities/:id`)
     .get(getOpportunity)
     // Update an existing opportunity
     .put(
-        verifyAccess({ requiredType: "organization_representative" }),
+        verifyAccess({ requiredType: 'organization_representative' }),
         verifyOrganizationManager(),
         updateOpportunity
     )
     // Patch an existing opportunity
     .patch(
-        verifyAccess({ requiredType: "organization_representative" }),
+        verifyAccess({ requiredType: 'organization_representative' }),
         verifyOrganizationManager(),
         updateOpportunity
     )
     // Delete an existing opportunity
     .delete(
-        verifyAccess({ requiredType: "organization_representative" }),
+        verifyAccess({ requiredType: 'organization_representative' }),
         verifyOrganizationManager(),
         deleteOpportunity
     );
@@ -51,7 +51,7 @@ router.route(`${BASE_PATH}/organizations/:organizationId/opportunities`)
     .get(getOpportunitiesPerOrganization)
     // Create a new opportunity
     .post(
-        verifyAccess({ requiredType: "organization_representative" }),
+        verifyAccess({ requiredType: 'organization_representative' }),
         verifyOrganizationManager(),
         createOpportunity
     )
