@@ -12,7 +12,7 @@ const opportunitySchema = new Schema({
         type: Date,
         required: true,
     },
-    status: { type: String, enum: ['upcoming', 'ongoing', 'past', 'canceled'], default: "upcoming" },
+    status: { type: String, enum: ['upcoming', 'ongoing', 'past', 'canceled'], default: 'upcoming' },
     address: {
         type: String,
         required: true,
@@ -28,4 +28,4 @@ opportunitySchema.index({ date: 1 });
 opportunitySchema.index({ status: 1 });
 opportunitySchema.index({ organizationId: 1 });
 
-module.exports = mongoose.model("Opportunity", opportunitySchema);
+module.exports = mongoose.model('Opportunity', opportunitySchema);

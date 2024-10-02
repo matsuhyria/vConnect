@@ -1,29 +1,29 @@
 module.exports = {
-    "env": {
-        "node": true,
-        "es6": true
+    'env': {
+        'node': true,
+        'es6': true
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "ecmaVersion": 2018
+    'extends': 'eslint:recommended',
+    'parserOptions': {
+        'ecmaVersion': 2018
     },
-    "rules": {
-        "no-console": "off",
-        "indent": [
-            "warn",
+    'rules': {
+        'no-console': 'off',
+        'indent': [
+            'error',
             4
         ],
-        "linebreak-style": [
-            "error",
-            "unix"
+        'linebreak-style': [
+            'error',
+            'unix'
         ],
-        "quotes": [
-            "off",
-            "double"
+        'quotes': [
+            'error',
+            'single'
         ],
-        "semi": [
-            "warn",
-            "always"
+        'semi': [
+            'error',
+            'always'
         ]
     }
-};  
+};

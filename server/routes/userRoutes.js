@@ -1,9 +1,9 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const { BASE_PATH } = require("../helpers/constants");
-const { createUser, getUser, updateUser, deleteUser, loginUser } = require("../controllers/userController");
-const verifyAccess = require("../middlewares/auth/verifyAccess");
+const { BASE_PATH } = require('../helpers/constants');
+const { createUser, getUser, updateUser, deleteUser, loginUser } = require('../controllers/userController');
+const verifyAccess = require('../middlewares/auth/verifyAccess');
 
 // Define routes for creating a new user and logging in
 router.post(`${BASE_PATH}/users`, createUser);
