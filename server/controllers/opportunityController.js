@@ -1,4 +1,5 @@
 const Opportunity = require("../models/opportunity");
+const { applyPagination, getPaginationParams } = require("../helpers/queryUtils")
 
 const createOpportunity = async (req, res) => {
     const { organizationId } = req.params;
@@ -20,34 +21,25 @@ const createOpportunity = async (req, res) => {
     }
 };
 
-const getPaginatedOpportunities = async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-
-    if(page <= 0) {
-        return res.status(400).json({ message: "Invalid page parameter. It must a positive integer" });
-    }
-
-    const limit = parseInt(req.query.limit) || 10;
-    
-    if(limit  <= 0) {
-        return res.status(400).json({ message: "Invalid limit parameter. It must a positive integer" });
-    }
-
-    const skip = (page - 1) * limit;
-
+const getOpportunities = async (req, res) => {
     try {
-        const opportunities = await Opportunity.find()
-            .skip(skip)
-            .limit(limit);
+        const { page, limit } = getPaginationParams(req);
+       
+        let query = Opportunity.find();
+
+        query  = applyPagination(query, page, limit);
+
+        const opportunities = await query.exec();
 
         if (!opportunities) return res.status(404).json({ message: "Opportunities not found" });
 
         const itemsCount = await Opportunity.countDocuments();
+        const totalPages = Math.ceil(itemsCount / limit);
 
         res.status(200).json({
             page,
             limit,
-            totalPages: Math.ceil(itemsCount / limit),
+            totalPages,
             data: opportunities,
         });
     } catch (err) {
@@ -62,7 +54,7 @@ const getOpportunity = async (req, res) => {
         if (!opportunity) return res.status(404).json({ message: "Opportunity not found" });
         res.status(200).json(opportunity);
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
@@ -108,4 +100,4 @@ const deleteOpportunity = async (req, res) => {
     }
 };
 
-module.exports = { createOpportunity, getPaginatedOpportunities, getOpportunity, getOpportunitiesPerOrganization, updateOpportunity, deleteOpportunity };
+module.exports = { createOpportunity, getOpportunities, getOpportunity, getOpportunitiesPerOrganization, updateOpportunity, deleteOpportunity };

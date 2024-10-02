@@ -4,7 +4,7 @@ const router = express.Router();
 const { BASE_PATH } = require("../helpers/constants");
 const {
     createOpportunity,
-    getPaginatedOpportunities,
+    getOpportunities,
     getOpportunity,
     getOpportunitiesPerOrganization,
     updateOpportunity,
@@ -16,7 +16,7 @@ const verifyOrganizationManager = require("../middlewares/auth/verifyOrganizatio
 // Define routes for opportunities API.
 router.route(`${BASE_PATH}/opportunities`)
     // Get all opportunities with pagination
-    .get(getPaginatedOpportunities);
+    .get(getOpportunities);
 
 router.route(`${BASE_PATH}/opportunities/:id`)
     // Get an existing opportunity by ID
