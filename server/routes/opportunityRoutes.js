@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const { BASE_PATH } = require("../helpers/constants");
+const { BASE_PATH } = require('../helpers/constants');
 const {
     createOpportunity,
     getOpportunities,
@@ -9,18 +9,18 @@ const {
     getOpportunitiesPerOrganization,
     updateOpportunity,
     deleteOpportunity
-} = require("../controllers/opportunityController");
-const verifyAccess = require("../middlewares/auth/verifyAccess");
-const verifyOrganizationManager = require("../middlewares/auth/verifyOrganizationManager");
+} = require('../controllers/opportunityController');
+const verifyAccess = require('../middlewares/auth/verifyAccess');
+const verifyOrganizationManager = require('../middlewares/auth/verifyOrganizationManager');
 
 // Define routes for opportunities API.
 router.route(`${BASE_PATH}/opportunities`)
-    // Get all opportunities
-    .get(getOpportunities)
+    // Get all opportunities with pagination
+    .get(getOpportunities);
 
 router.route(`${BASE_PATH}/opportunities/:id`)
     // Get an existing opportunity by ID
-    .get(getOpportunity)
+    .get(getOpportunity);
 
 router.route(`${BASE_PATH}/organizations/:organizationId/opportunities/:id`)
     // Get an existing opportunity by ID
@@ -54,6 +54,6 @@ router.route(`${BASE_PATH}/organizations/:organizationId/opportunities`)
         verifyAccess({ requiredType: 'organization_representative' }),
         verifyOrganizationManager(),
         createOpportunity
-    )
+    );
 
 module.exports = router;

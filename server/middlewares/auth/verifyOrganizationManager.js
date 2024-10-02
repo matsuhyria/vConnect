@@ -1,4 +1,4 @@
-const Organization = require("../../models/organization")
+const Organization = require('../../models/organization');
 
 // middleware for verifying organization manager
 const verifyOrganizationManager = () => {
@@ -25,6 +25,6 @@ const verifyOrganizationManager = () => {
             return res.status(500).json({ message: 'Server Error', err });
         }
     };
-}
+};
 
 module.exports = verifyOrganizationManager;

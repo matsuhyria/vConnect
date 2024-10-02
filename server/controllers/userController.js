@@ -1,9 +1,7 @@
-const { NODE_ENV, TOKEN_COOKIE_NAME } = require('../helpers/constants');
 const { generateToken } = require('../helpers/jwt');
-const User = require("../models/user");
+const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const tokenMaxAge = 24 * 60 * 60 * 1000; // 24 hour in milliseconds
 
 const createUser = async (req, res) => {
     try {
@@ -20,7 +18,7 @@ const createUser = async (req, res) => {
 
         res.status(201).json({ token, user: { id: user._id, email: user.email, type: user.type } });
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(400).send({ message: err.message });
     }
 };
@@ -29,17 +27,17 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
-        if (!user) return res.status(404).json({ message: "User not found" });
+        if (!user) return res.status(404).json({ message: 'User not found' });
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+        if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
         // Generate JWT token
         const token = generateToken({ userId: user._id, email, type: user.type });
 
-        res.status(200).json({ message: "Login successful", token, user: { id: user._id, email: user.email, type: user.type } });
+        res.status(200).json({ message: 'Login successful', token, user: { id: user._id, email: user.email, type: user.type } });
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
@@ -47,10 +45,10 @@ const loginUser = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
-        if (!user) return res.status(404).json({ message: "User not found" });
+        if (!user) return res.status(404).json({ message: 'User not found' });
         res.status(200).json(user);
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
@@ -64,14 +62,14 @@ const updateUser = async (req, res) => {
             { $set: { name, email, password: encryptedPassword, type } },
             { new: true }
         );
-        if (!user) return res.status(404).json({ message: "User not found" });
+        if (!user) return res.status(404).json({ message: 'User not found' });
 
         // Generate JWT token
         const token = generateToken({ userId: user._id, email, type: user.type });
 
-        res.status(200).json({ message: "Update successful", token, user: { id: user._id, email: user.email, type: user.type } });
+        res.status(200).json({ message: 'Update successful', token, user: { id: user._id, email: user.email, type: user.type } });
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
@@ -79,10 +77,10 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
-        if (!user) return res.status(404).json({ message: "User not found" });
-        res.status(200).json({ message: "User deleted!", user });
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        res.status(200).json({ message: 'User deleted!', user });
     } catch (err) {
-        console.error(err)
+        console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
     }
 };
