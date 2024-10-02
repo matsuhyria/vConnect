@@ -22,9 +22,15 @@ const createOpportunity = async (req, res) => {
 };
 
 const getOpportunities = async (req, res) => {
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    if (page <= 0 || limit <= 0) {
+        return res.status(400).json({ message: "Invalid page or limit parameter. It must be a positive integer."});
+    }
+
     try {
-        const { page, limit } = getPaginationParams(req);
-       
         let query = Opportunity.find();
 
         query  = applyPagination(query, page, limit);
