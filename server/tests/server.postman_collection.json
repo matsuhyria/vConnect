@@ -644,7 +644,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"XYZ\",\n    \"date\": \"2024-03-10T16:30\",\n    \"address\": \"street1\",\n    \"description\": \"describe\"\n}",
+							"raw": "{\n    \"title\": \"XYZ\",\n    \"date\": \"2027-10-03T20:49:07.551Z\",\n    \"address\": \"street1\",\n    \"description\": \"describe\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -797,6 +797,20 @@
 								"api",
 								"{{version}}",
 								"opportunities"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "date",
+									"value": "2024-03-10T15:30:00"
+								}
 							]
 						}
 					},
@@ -925,7 +939,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"ZXC\",\n    \"date\": \"1970\",\n    \"address\": \"street1\",\n    \"description\": \"describe\"\n}",
+							"raw": "{\n    \"title\": \"ZXC\",\n    \"date\": \"2027-10-03T20:49:07.551Z\",\n    \"address\": \"street1\",\n    \"description\": \"describe\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
