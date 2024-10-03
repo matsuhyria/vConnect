@@ -1349,7 +1349,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/api/{{version}}/organizations/{{organization_id}}/opportunities/{{opportunity_id}}",
+					"raw": "{{base_url}}/api/{{version}}/organizations/{{organization_id}}/opportunities/",
 					"host": [
 						"{{base_url}}"
 					],
@@ -1359,7 +1359,7 @@
 						"organizations",
 						"{{organization_id}}",
 						"opportunities",
-						"{{opportunity_id}}"
+						""
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."

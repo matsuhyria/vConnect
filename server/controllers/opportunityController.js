@@ -84,7 +84,7 @@ const deleteOpportunitiesPerOrganization = async (req, res) => {
     try {
         const { organizationId } = req.params;
         const deletedOpportunities = await Opportunity.deleteMany({ organizationId });
-        if (!deletedOpportunities) return res.status(404).json({ message: 'Opportunities for this organization not found' });
+
         res.status(200).json({ deletedOpportunities });
     } catch (err) {
         console.error(err);
