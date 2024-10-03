@@ -31,6 +31,13 @@ const getOpportunities = async (req, res) => {
         return res.status(400).json({ message: 'Invalid page or limit parameter. It must be a positive integer.' });
     }
 
+    if (date) {
+        const parsedDate = new Date(date);
+        if (isNaN(parsedDate.getTime())) {
+            return res.status(400).json({ message: 'Invalid date format. Please provide a valid date in the YYYY-MM-DD' });
+        }
+    }
+
     try {
         let query = Opportunity.find();
 
