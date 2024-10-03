@@ -1,5 +1,6 @@
 const Opportunity = require('../models/opportunity');
 const { applyPagination } = require('../helpers/queryUtils');
+const Registration = require('../models/registration');
 
 const createOpportunity = async (req, res) => {
     const { organizationId } = req.params;
@@ -78,6 +79,19 @@ const getOpportunitiesPerOrganization = async (req, res) => {
     }
 };
 
+
+const deleteOpportunitiesPerOrganization = async (req, res) => {
+    try {
+        const { organizationId } = req.params;
+        const deletedOpportunities = await Opportunity.deleteMany({ organizationId });
+        if (!deletedOpportunities) return res.status(404).json({ message: 'Opportunities for this organization not found' });
+        res.status(200).json({ deletedOpportunities });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Server Error', err });
+    }
+};
+
 const updateOpportunity = async (req, res) => {
     try {
         const { organizationId } = req.params;
@@ -99,6 +113,9 @@ const deleteOpportunity = async (req, res) => {
     try {
         const opportunity = await Opportunity.findByIdAndDelete(req.params.id);
         if (!opportunity) return res.status(404).json({ message: 'Opportunity not found' });
+
+        Registration.deleteMany({ opportunity: opportunity._id });
+
         res.status(200).json({ message: 'Opportunity deleted!', opportunity });
     } catch (err) {
         console.error(err);
@@ -106,4 +123,12 @@ const deleteOpportunity = async (req, res) => {
     }
 };
 
-module.exports = { createOpportunity, getOpportunities, getOpportunity, getOpportunitiesPerOrganization, updateOpportunity, deleteOpportunity };
+module.exports = {
+    createOpportunity,
+    getOpportunities,
+    getOpportunity,
+    getOpportunitiesPerOrganization,
+    deleteOpportunitiesPerOrganization,
+    updateOpportunity,
+    deleteOpportunity
+};

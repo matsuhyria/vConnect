@@ -1,3 +1,4 @@
+const Opportunity = require('../models/opportunity');
 const Organization = require('../models/organization');
 
 const createOrganization = async (req, res) => {
@@ -89,6 +90,8 @@ const deleteOrganizationById = async (req, res) => {
         if (!organization) {
             return res.status(404).json({ error: 'Organization not found' });
         }
+
+        Opportunity.deleteMany({ organizationId: organization._id });
 
         res.status(200).json({ message: 'Organization deleted successfully' });
     } catch (err) {
