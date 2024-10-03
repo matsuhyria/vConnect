@@ -11,6 +11,14 @@ const createRegistration = async (req, res) => {
             return res.status(404).json({ message: 'Opportunity not found' });
         }
 
+        if (opportunity.status === 'canceled') {
+            return res.status(400).json({ message: 'Opportunity canceled' });
+        }
+
+        if (new Date(opportunity.date) < Date.now()) {
+            return res.status(400).json({ message: 'Opportunity expired' });
+        }
+
         const registration = new Registration({
             date: Date.now(),
             user: req.user.userId,
