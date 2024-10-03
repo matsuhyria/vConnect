@@ -12,7 +12,7 @@ const opportunitySchema = new Schema({
         type: Date,
         required: true,
     },
-    status: { type: String, enum: ['upcoming', 'ongoing', 'past', 'canceled'], default: 'upcoming' },
+    status: { type: String, enum: ['active', 'canceled'], default: 'active' },
     address: {
         type: String,
         required: true,

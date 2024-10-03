@@ -6,6 +6,10 @@ const createOpportunity = async (req, res) => {
     const { organizationId } = req.params;
     const { title, date, address, description } = req.body;
 
+    if (!date || isNaN(new Date(date).getTime())) {
+        return res.status(400).json({ message: 'Invalid opportunity date' });
+    }
+
     const opportunity = new Opportunity({
         title,
         date,
