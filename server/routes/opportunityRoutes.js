@@ -7,6 +7,7 @@ const {
     getOpportunities,
     getOpportunity,
     getOpportunitiesPerOrganization,
+    deleteOpportunitiesPerOrganization,
     updateOpportunity,
     deleteOpportunity
 } = require('../controllers/opportunityController');
@@ -54,6 +55,13 @@ router.route(`${BASE_PATH}/organizations/:organizationId/opportunities`)
         verifyAccess({ requiredType: 'organization_representative' }),
         verifyOrganizationManager(),
         createOpportunity
+    )
+    // Delete all opportunities for a specific organization
+    .delete(
+        verifyAccess({ requiredType: 'organization_representative' }),
+        verifyOrganizationManager(),
+        deleteOpportunitiesPerOrganization
     );
+
 
 module.exports = router;

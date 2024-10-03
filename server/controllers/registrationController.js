@@ -8,7 +8,7 @@ const createRegistration = async (req, res) => {
         const opportunity = await Opportunity.findById(id);
 
         if (!opportunity) {
-            return res.status(404).json({ error: 'Opportunity not found' });
+            return res.status(404).json({ message: 'Opportunity not found' });
         }
 
         const registration = new Registration({
@@ -36,12 +36,12 @@ const getAllUserRegistrations = async (req, res) => {
         });
 
         if (!registrations) {
-            return res.status(404).json({ error: 'Registrations not found' });
+            return res.status(404).json({ message: 'Registrations not found' });
         }
 
         res.status(200).json(registrations);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to retrieve registrations' });
+        res.status(500).json({ message: 'Failed to retrieve registrations' });
     }
 };
 
@@ -56,16 +56,16 @@ const getRegistrationsPerOpportunity = async (req, res) => {
         const registration = await Registration.find({ opportunity: id });
 
         if (!registration) {
-            return res.status(404).json({ error: 'Registration for this opportunity not found' });
+            return res.status(404).json({ message: 'Registration for this opportunity not found' });
         }
 
         res.status(200).json(registration);
     } catch (err) {
         console.error(err);
         if (err.kind === 'ObjectId') {
-            return res.status(400).json({ error: 'Invalid opportunity ID' });
+            return res.status(400).json({ message: 'Invalid opportunity ID' });
         }
-        return res.status(500).json({ error: 'Failed to retrieve registration' });
+        return res.status(500).json({ message: 'Failed to retrieve registration' });
     }
 };
 
@@ -83,9 +83,9 @@ const updateRegistrationById = async (req, res) => {
     } catch (err) {
         console.error(err);
         if (err.kind === 'ObjectId') {
-            return res.status(400).json({ error: 'Invalid registration ID' });
+            return res.status(400).json({ message: 'Invalid registration ID' });
         }
-        return res.status(500).json({ error: 'Failed to update registration' });
+        return res.status(500).json({ message: 'Failed to update registration' });
     }
 };
 
@@ -99,9 +99,9 @@ const deleteRegistrationById = async (req, res) => {
     } catch (err) {
         console.error(err);
         if (err.kind === 'ObjectId') {
-            return res.status(400).json({ error: 'Invalid registration ID' });
+            return res.status(400).json({ message: 'Invalid registration ID' });
         }
-        res.status(500).json({ error: 'Failed to delete registration' });
+        res.status(500).json({ message: 'Failed to delete registration' });
     }
 };
 

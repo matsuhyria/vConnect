@@ -12,7 +12,7 @@ const createFeedback = async (req, res) => {
         const existingOpportunity = await Opportunity.findById(opportunity_id);
 
         if (!existingUser || !existingOpportunity) {
-            return res.status(404).json({ error: 'User or Opportunity not found' });
+            return res.status(404).json({ message: 'User or Opportunity not found' });
         }
 
         const feedback = new Feedback({
@@ -44,7 +44,7 @@ const getAllFeedbacks = async (req, res) => {
 
         res.status(200).json(feedbacks);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to retrieve feedbacks' });
+        res.status(500).json({ message: 'Failed to retrieve feedbacks' });
     }
 };
 
@@ -59,16 +59,16 @@ const getFeedbackById = async (req, res) => {
         });
 
         if (!feedback) {
-            return res.status(404).json({ error: 'Feedback not found' });
+            return res.status(404).json({ message: 'Feedback not found' });
         }
 
         res.status(200).json(feedback);
     } catch (err) {
         if (err.kind === 'ObjectId') {
-            return res.status(400).json({ error: 'Invalid feedback ID' });
+            return res.status(400).json({ message: 'Invalid feedback ID' });
         }
         console.error(err);
-        return res.status(500).json({ error: 'Failed to retrieve feedback' });
+        return res.status(500).json({ message: 'Failed to retrieve feedback' });
     }
 };
 
@@ -88,16 +88,16 @@ const updateFeedbackById = async (req, res) => {
         );
 
         if (!feedback) {
-            return res.status(404).json({ error: 'Feedback not found' });
+            return res.status(404).json({ message: 'Feedback not found' });
         }
 
         res.status(200).json(feedback);
     } catch (err) {
         if (err.kind === 'ObjectId') {
-            return res.status(400).json({ error: 'Invalid feedback ID' });
+            return res.status(400).json({ message: 'Invalid feedback ID' });
         }
         console.error(err);
-        return res.status(500).json({ error: 'Failed to update feedback' });
+        return res.status(500).json({ message: 'Failed to update feedback' });
     }
 };
 
@@ -108,16 +108,16 @@ const deleteFeedbackById = async (req, res) => {
         const feedback = await Feedback.findByIdAndDelete(feedback_id);
 
         if (!feedback) {
-            return res.status(404).json({ error: 'Feedback not found' });
+            return res.status(404).json({ message: 'Feedback not found' });
         }
 
         res.status(200).json({ message: 'Feedback deleted successfully' });
     } catch (err) {
         if (err.kind === 'ObjectId') {
-            return res.status(400).json({ error: 'Invalid feedback ID' });
+            return res.status(400).json({ message: 'Invalid feedback ID' });
         }
         console.error(err);
-        res.status(500).json({ error: 'Failed to delete feedback' });
+        res.status(500).json({ message: 'Failed to delete feedback' });
     }
 };
 
