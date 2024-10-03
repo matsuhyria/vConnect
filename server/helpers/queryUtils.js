@@ -6,16 +6,16 @@ const applyPagination = (query, page, limit) => {
 };
 
 const applyDateFiltration = (query, date) => {
+ 
+    if(!date) {
+        return query.where('date').gte(new Date()); 
+    }
 
-    const filtDate = date ? new Date(date) : new Date();
-
-    const startOfDay = new Date(filtDate);
-    const endOfDay = new Date(filtDate);
-
+    const startOfDay = new Date(date);
     startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(date);
     endOfDay.setHours(23, 59, 59, 999);
-
-    return query = query.where('date').gte(startOfDay).lte(endOfDay);
+    return query.where('date').gte(startOfDay).lte(endOfDay);
 };
 
 module.exports = {
