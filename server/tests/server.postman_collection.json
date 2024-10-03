@@ -25,6 +25,7 @@
 									"var jsonData = pm.response.json();",
 									"pm.environment.set(\"user_id\", jsonData.user.id);",
 									"pm.environment.set(\"token\", jsonData.token);",
+									"pm.environment.set(\"rep_token\", jsonData.token);",
 									"",
 									"pm.environment.set(\"create_user_rep\", pm.request);",
 									""
@@ -85,6 +86,7 @@
 									"var jsonData = pm.response.json();",
 									"pm.environment.set(\"user_id\", jsonData.user.id);",
 									"pm.environment.set(\"token\", jsonData.token);",
+									"pm.environment.set(\"rep_token\", jsonData.token);",
 									""
 								],
 								"type": "text/javascript",
@@ -469,7 +471,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"XYZ Organization\",\n  \"description\": \"A great cause\",\n  \"email\": \"info@org.com\",\n  \"address\": \"987 Main St, City\",\n  \"rating\": 1\n}",
+							"raw": "{\n    \"name\": \"Organization\",\n    \"description\": \"A great cause\",\n    \"email\": \"info@org.com\",\n    \"address\": \"987 Main St, City\",\n    \"rating\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -642,7 +644,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"XYZ\",\n    \"date\": \"1970\",\n    \"address\": \"street1\",\n    \"description\": \"describe\"\n}",
+							"raw": "{\n    \"title\": \"XYZ\",\n    \"date\": \"2024-03-10T16:30\",\n    \"address\": \"street1\",\n    \"description\": \"describe\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -787,7 +789,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/{{version}}/opportunities",
+							"raw": "{{base_url}}/api/{{version}}/opportunities?page=1&limit=50&date=2024-03-10T15:30:00",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1300,6 +1302,64 @@
 						"{{organization_id}}",
 						"opportunities",
 						"{{opportunity_id}}"
+					]
+				},
+				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "delete organization's opportunities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"token\", pm.environment.get(\"rep_token\"));",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/{{version}}/organizations/{{organization_id}}/opportunities/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"organizations",
+						"{{organization_id}}",
+						"opportunities",
+						""
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
