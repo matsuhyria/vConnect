@@ -5,11 +5,9 @@ const applyPagination = (query, page, limit) => {
     return query.skip(skip).limit(limit);
 };
 
-const applyDateFiltration = (query, filters) => {
-    const { exactDate } = filters;
-
-    if (exactDate) {
-        query = query.where('date').equals(new Date(exactDate));
+const applyDateFiltration = (query, date) => {
+    if (date) {
+        query = query.where('date').equals(new Date(date));
     }
     return query;
 };

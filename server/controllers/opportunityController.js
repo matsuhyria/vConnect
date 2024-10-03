@@ -1,5 +1,5 @@
 const Opportunity = require('../models/opportunity');
-const { applyPagination } = require('../helpers/queryUtils');
+const { applyPagination, applyDateFiltration } = require('../helpers/queryUtils');
 
 const createOpportunity = async (req, res) => {
     const { organizationId } = req.params;
@@ -25,6 +25,7 @@ const getOpportunities = async (req, res) => {
 
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
+    const date = req.query.date;
 
     if (page <= 0 || limit <= 0) {
         return res.status(400).json({ message: 'Invalid page or limit parameter. It must be a positive integer.' });
@@ -32,6 +33,8 @@ const getOpportunities = async (req, res) => {
 
     try {
         let query = Opportunity.find();
+
+        query = applyDateFiltration(query, date);
 
         query = applyPagination(query, page, limit);
 
