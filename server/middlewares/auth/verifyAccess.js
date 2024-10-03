@@ -1,5 +1,5 @@
-const { TOKEN_COOKIE_NAME } = require("../../helpers/constants");
-const { verifyToken } = require("../../helpers/jwt");
+const { TOKEN_COOKIE_NAME } = require('../../helpers/constants');
+const { verifyToken } = require('../../helpers/jwt');
 
 // middleware for verifying token, roles, and ownership
 const verifyAccess = ({ requiredType = null, checkOwnUser = false } = {}) => {

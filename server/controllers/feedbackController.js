@@ -24,7 +24,7 @@ const createFeedback = async (req, res) => {
         });
 
         await feedback.save();
-        
+
         res.status(201).json(feedback);
     } catch (err) {
         console.error(err);

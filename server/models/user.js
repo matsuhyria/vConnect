@@ -18,10 +18,10 @@ const userSchema = new Schema({
         required: true,
     },
     type: {
-        type: String, enum: ['volunteer', 'organization_representative'], default: "volunteer"
+        type: String, enum: ['volunteer', 'organization_representative'], default: 'volunteer'
     }
 });
 
 userSchema.index({ email: 1, type: 1 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);

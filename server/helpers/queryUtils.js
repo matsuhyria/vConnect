@@ -1,16 +1,7 @@
-const getPaginationParams = (req) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-
-    if (page <= 0 || limit <= 0) {
-        throw new Error("Invalid page or limit parameter. It must be a positive integer.");
-    }
-
-    return { page, limit };
-};
-
 const applyPagination = (query, page, limit) => {
+    // Calculate the number of documents to skip based on the current page
     const skip = (page - 1) * limit;
+    // Apply skip and limit to the query for pagination
     return query.skip(skip).limit(limit);
 };
 
@@ -24,7 +15,6 @@ const applyDateFiltration = (query, filters) => {
 };
 
 module.exports = {
-    getPaginationParams, 
     applyPagination,
     applyDateFiltration,
 };

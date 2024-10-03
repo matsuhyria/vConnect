@@ -21,14 +21,14 @@ const verifyRegistrationOwnership = () => {
             req.registration = registration;
 
             next();
-        } catch (error) {
-            console.error('Error in ownership middleware:', error);
+        } catch (err) {
+            console.error('Error in ownership middleware:', err);
             if (err.kind === 'ObjectId') {
-                return res.status(400).json({ error: 'Invalid registration ID' });
+                return res.status(400).json({ err: 'Invalid registration ID' });
             }
-            return res.status(500).json({ message: 'Server Error', error: error.message });
+            return res.status(500).json({ message: 'Server Error', err: err.message });
         }
-    }
+    };
 };
 
 module.exports = verifyRegistrationOwnership;

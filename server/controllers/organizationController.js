@@ -19,7 +19,7 @@ const createOrganization = async (req, res) => {
         });
         await organization.save();
 
-        res.status(201).json({ message: "Organization created!", organization });
+        res.status(201).json({ message: 'Organization created!', organization });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err.message });
