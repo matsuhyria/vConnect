@@ -60,7 +60,7 @@ router.route(`${BASE_PATH}/organizations/:organizationId/opportunities`)
     .delete(
         verifyAccess({ requiredType: 'organization_representative' }),
         verifyOrganizationManager(),
-        deleteOpportunitiesPerOrganization()
+        deleteOpportunitiesPerOrganization
     );
 
 

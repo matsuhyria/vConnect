@@ -33,7 +33,7 @@ const getAllOrganizations = async (req, res) => {
 
         res.status(200).json(organizations);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to retreive organizations' });
+        res.status(500).json({ message: 'Failed to retreive organizations' });
     }
 };
 
@@ -43,16 +43,16 @@ const getOrganizationById = async (req, res) => {
         const organization = await Organization.findById(id);
 
         if (!organization) {
-            return res.status(404).json({ error: 'Organization not found' });
+            return res.status(404).json({ message: 'Organization not found' });
         }
 
         res.status(200).json(organization);
     } catch (err) {
         if (err.kind === 'ObjectId') {
-            return res.status(400).json({ error: 'Invalid organization ID' });
+            return res.status(400).json({ message: 'Invalid organization ID' });
         }
         console.error(err);
-        return res.status(500).json({ error: 'Failed to retreive organization by id' });
+        return res.status(500).json({ message: 'Failed to retreive organization by id' });
     }
 };
 
@@ -68,16 +68,16 @@ const updateOrganizationById = async (req, res) => {
         );
 
         if (!organization) {
-            res.status(404).json({ error: 'Organization not found' });
+            res.status(404).json({ message: 'Organization not found' });
         }
 
         res.status(200).json(organization);
     } catch (err) {
         if (err.kind === 'ObjectId') {
-            return res.status(400).json({ error: 'Invalid organization ID' });
+            return res.status(400).json({ message: 'Invalid organization ID' });
         }
         console.error(err);
-        return res.status(500).json({ error: 'Failed to update organization' });
+        return res.status(500).json({ message: 'Failed to update organization' });
     }
 };
 
@@ -88,18 +88,18 @@ const deleteOrganizationById = async (req, res) => {
         const organization = await Organization.findByIdAndDelete(id);
 
         if (!organization) {
-            return res.status(404).json({ error: 'Organization not found' });
+            return res.status(404).json({ message: 'Organization not found' });
         }
 
         Opportunity.deleteMany({ organizationId: organization._id });
 
-        res.status(200).json({ message: 'Organization deleted successfully' });
+        res.status(200).json({ message: 'Organization deleted successfully', organization });
     } catch (err) {
         if (err.kind === 'ObjectId') {
-            return res.status(400).json({ error: 'Invalid organization ID' });
+            return res.status(400).json({ message: 'Invalid organization ID' });
         }
         console.error(err);
-        res.status(500).json({ error: 'Failed to delete organization' });
+        res.status(500).json({ message: 'Failed to delete organization' });
     }
 };
 

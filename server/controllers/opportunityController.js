@@ -1,6 +1,6 @@
 const Opportunity = require('../models/opportunity');
-const { applyPagination } = require('../helpers/queryUtils');
 const Registration = require('../models/registration');
+const { applyPagination } = require('../helpers/queryUtils');
 
 const createOpportunity = async (req, res) => {
     const { organizationId } = req.params;
