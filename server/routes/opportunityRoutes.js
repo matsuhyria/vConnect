@@ -7,7 +7,7 @@ const {
     getOpportunities,
     getOpportunity,
     getOpportunitiesPerOrganization,
-    deleteOpportunitiesPerOrganization,
+    deleteAllOpportunities,
     updateOpportunity,
     deleteOpportunity
 } = require('../controllers/opportunityController');
@@ -17,7 +17,12 @@ const verifyOrganizationManager = require('../middlewares/auth/verifyOrganizatio
 // Define routes for opportunities API.
 router.route(`${BASE_PATH}/opportunities`)
     // Get all opportunities with pagination
-    .get(getOpportunities);
+    .get(getOpportunities)
+    // Delete all opportunities for a specific organization
+    .delete(
+        verifyAccess({ requiredType: 'admin' }),
+        deleteAllOpportunities
+    );
 
 router.route(`${BASE_PATH}/opportunities/:id`)
     // Get an existing opportunity by ID
@@ -55,12 +60,6 @@ router.route(`${BASE_PATH}/organizations/:organizationId/opportunities`)
         verifyAccess({ requiredType: 'organization_representative' }),
         verifyOrganizationManager(),
         createOpportunity
-    )
-    // Delete all opportunities for a specific organization
-    .delete(
-        verifyAccess({ requiredType: 'organization_representative' }),
-        verifyOrganizationManager(),
-        deleteOpportunitiesPerOrganization
     );
 
 
