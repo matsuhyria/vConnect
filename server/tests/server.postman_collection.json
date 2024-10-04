@@ -12,6 +12,65 @@
 			"name": "users",
 			"item": [
 				{
+					"name": "create an admin user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([409, 200, 201]);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"admin_token\", jsonData.token);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"admin\",\n    \"email\": \"admin@vconnect.com\",\n    \"password\": 321,\n    \"type\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/{{version}}/users/admin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{version}}",
+								"users",
+								"admin"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
 					"name": "create a user",
 					"event": [
 						{
@@ -1323,7 +1382,7 @@
 			"response": []
 		},
 		{
-			"name": "delete organization's opportunities",
+			"name": "delete all opportunities",
 			"event": [
 				{
 					"listen": "test",
@@ -1342,7 +1401,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.environment.set(\"token\", pm.environment.get(\"rep_token\"));",
+							"pm.environment.set(\"token\", pm.environment.get(\"admin_token\"));",
 							""
 						],
 						"type": "text/javascript",
@@ -1363,15 +1422,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/api/{{version}}/organizations/{{organization_id}}/opportunities/",
+					"raw": "{{base_url}}/api/{{version}}/opportunities/",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"api",
 						"{{version}}",
-						"organizations",
-						"{{organization_id}}",
 						"opportunities",
 						""
 					]
@@ -1422,6 +1479,62 @@
 						"{{organization_id}}"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete all organizations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"token\", pm.environment.get(\"admin_token\"));",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/{{version}}/organizations/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"organizations",
+						""
+					]
+				},
+				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
 			},
 			"response": []
 		}
