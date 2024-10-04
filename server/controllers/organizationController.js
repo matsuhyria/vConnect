@@ -37,6 +37,16 @@ const getAllOrganizations = async (req, res) => {
     }
 };
 
+const deleteAllOrganizations = async (req, res) => {
+    try {
+        const deletedOrganizations = await Organization.deleteMany({});
+
+        res.status(200).json({ deletedOrganizations });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to delete organizations' });
+    }
+};
+
 const getOrganizationById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -103,4 +113,4 @@ const deleteOrganizationById = async (req, res) => {
     }
 };
 
-module.exports = { createOrganization, getAllOrganizations, getOrganizationById, updateOrganizationById, deleteOrganizationById };
+module.exports = { createOrganization, getAllOrganizations, deleteAllOrganizations, getOrganizationById, updateOrganizationById, deleteOrganizationById };

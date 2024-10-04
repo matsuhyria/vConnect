@@ -18,7 +18,7 @@ const userSchema = new Schema({
         required: true,
     },
     type: {
-        type: String, enum: ['volunteer', 'organization_representative'], default: 'volunteer'
+        type: String, enum: ['volunteer', 'organization_representative', 'admin'], default: 'volunteer'
     }
 });
 

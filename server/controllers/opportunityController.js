@@ -80,9 +80,18 @@ const getOpportunity = async (req, res) => {
     }
 };
 
+const deleteAllOpportunities = async (req, res) => {
+    try {
+        const deletedOpportunities = await Opportunity.deleteMany({});
+
+        res.status(200).json({ deletedOpportunities });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Server Error', err });
+    }
+};
 
 const getOpportunitiesPerOrganization = async (req, res) => {
-    
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const date = req.query.date;
@@ -111,19 +120,6 @@ const getOpportunitiesPerOrganization = async (req, res) => {
         const opportunities = await query.exec();
         if (!opportunities) return res.status(404).json({ message: 'Opportunities for this organization not found' });
         res.status(200).json(opportunities);
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
-    }
-};
-
-
-const deleteOpportunitiesPerOrganization = async (req, res) => {
-    try {
-        const { organizationId } = req.params;
-        const deletedOpportunities = await Opportunity.deleteMany({ organizationId });
-
-        res.status(200).json({ deletedOpportunities });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
@@ -164,9 +160,9 @@ const deleteOpportunity = async (req, res) => {
 module.exports = {
     createOpportunity,
     getOpportunities,
+    deleteAllOpportunities,
     getOpportunity,
     getOpportunitiesPerOrganization,
-    deleteOpportunitiesPerOrganization,
     updateOpportunity,
     deleteOpportunity
 };
