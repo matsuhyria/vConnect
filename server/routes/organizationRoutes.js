@@ -5,6 +5,7 @@ const { BASE_PATH } = require('../helpers/constants');
 const {
     createOrganization,
     getAllOrganizations,
+    deleteAllOrganizations,
     getOrganizationById,
     updateOrganizationById,
     deleteOrganizationById
@@ -20,7 +21,12 @@ router.route(`${BASE_PATH}/organizations`)
         createOrganization
     )
     // Retrieve all organizations
-    .get(getAllOrganizations);
+    .get(getAllOrganizations)
+    // Delete all organizations
+    .delete(
+        verifyAccess({ requiredType: 'admin' }),
+        deleteAllOrganizations
+    );
 
 // Route for retrieving, updating, or deleting an organization by ID
 router.route(`${BASE_PATH}/organizations/:id`)
