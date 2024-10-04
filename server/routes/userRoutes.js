@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const { BASE_PATH } = require('../helpers/constants');
-const { createUser, getUser, updateUser, deleteUser, loginUser } = require('../controllers/userController');
+const { createUser, createAdminUser, getUser, updateUser, deleteUser, loginUser } = require('../controllers/userController');
 const verifyAccess = require('../middlewares/auth/verifyAccess');
+// addUser('123', 'admin', 'admin@vconnect.com', 'admin');
 
 // Define routes for creating a new user and logging in
 router.post(`${BASE_PATH}/users`, createUser);
+router.post(`${BASE_PATH}/users/admin`, createAdminUser);
 router.post(`${BASE_PATH}/users/login`, loginUser);
 
 // Define routes for retrieving, updating, and deleting a specific user
