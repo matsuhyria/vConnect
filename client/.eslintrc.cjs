@@ -13,7 +13,7 @@ module.exports = {
     'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/multi-word-component-names': 'off',
-    indent: { value: 4 },
+    'indent': [ 'error', 4]
   },
   parserOptions: {
     requireConfigFile: false
