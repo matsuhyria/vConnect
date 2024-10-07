@@ -1,5 +1,37 @@
 import axios from 'axios'
 
-export const Api = axios.create({
-  baseURL: import.meta.env.VITE_API_ENDPOINT || 'http://localhost:3000/api'
+const instance = axios.create({
+  baseURL: import.meta.env.VITE_API_ENDPOINT || 'http://localhost:3000/api/v1'
 })
+
+instance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+}, (error) => {
+  return Promise.reject(error)
+})
+
+const storeToken = (token) => {
+  if (token) {
+    localStorage.setItem('token', token)
+  }
+}
+
+export default {
+  login: async (data) => {
+    const response = await instance.post('users/login', data)
+    storeToken(response?.data?.token)
+    return response
+  },
+  logout: () => {
+    localStorage.removeItem('token')
+  },
+  regiser: async (data) => {
+    const response = await instance.post('users/register', data)
+    storeToken(response?.data?.token)
+    return response
+  }
+}
