@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-3">
+  <div class="mb-3 text-start fw-bold text-black">
     <label for="id" class="form-label"> {{ label }} </label>
     <input id="id" :type="inputType" :v-model="value" :placeholder="placeholder" :required="required" class="form-control" />
   </div>
@@ -33,4 +33,8 @@ export default {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.form-control {
+  background-color: #f8f9fa;
+}
+</style>
