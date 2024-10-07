@@ -1,7 +1,9 @@
 <template>
-  <Navbar />
-  <!-- Render the content of the current page view -->
-  <router-view />
+  <div>
+    <Navbar />
+    <!-- Render the content of the current page view -->
+    <router-view />
+  </div>
 </template>
 
 <script>
@@ -12,6 +14,7 @@ export default {
     Navbar
   }
 }
+
 </script>
 
 <style>
