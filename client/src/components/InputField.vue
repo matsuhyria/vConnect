@@ -1,7 +1,7 @@
 <template>
   <div class="mb-3 text-start fw-bold text-black">
-    <label for="id" class="form-label"> {{ label }} </label>
-    <input id="id" :type="inputType" :v-model="value" :placeholder="placeholder" :required="required" class="form-control" />
+    <label for="id" class="form-label">{{ label }}</label>
+    <input id="id" :type="inputType" :v-model="value" :placeholder="placeholder" :required="required" class="form-control bg-light"/>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   props: {
     label: {
       type: String,
-      default: 'Input'
+      required: true
     },
     inputType: {
       type: String,
@@ -30,11 +30,7 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>
-.form-control {
-  background-color: #f8f9fa;
-}
 </style>
