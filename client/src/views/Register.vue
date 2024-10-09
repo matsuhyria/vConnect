@@ -1,4 +1,42 @@
-<!-- src/views/Register.vue -->
+<script setup>
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import api from '@/Api'
+
+// Reactive form data
+const form = reactive({
+  name: '',
+  email: '',
+  type: 'volunteer',
+  password: '',
+  confirmPassword: ''
+})
+
+// Error message ref
+const errorMessage = ref(null)
+const router = useRouter()
+
+// Registration function
+const registerUser = async () => {
+  if (form.password !== form.confirmPassword) {
+    errorMessage.value = 'Passwords do not match'
+    return
+  }
+
+  try {
+    await api.register({
+      name: form.name,
+      email: form.email,
+      type: form.type,
+      password: form.password
+    })
+    router.push('/')
+  } catch (error) {
+    errorMessage.value = 'Registration failed. Please try again.'
+  }
+}
+</script>
+
 <template>
   <div class="mb-5">
     <img :src="`./logo-b.svg`" alt="logo" width="190" class="my-4" />
@@ -73,52 +111,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import api from '@/Api'
-
-export default {
-  setup() {
-    const form = reactive({
-      name: '',
-      email: '',
-      type: 'volunteer',
-      password: '',
-      confirmPassword: ''
-    })
-
-    const errorMessage = ref(null)
-    const router = useRouter()
-
-    const registerUser = async () => {
-      if (form.password !== form.confirmPassword) {
-        errorMessage.value = 'Passwords do not match'
-        return
-      }
-
-      try {
-        await api.register({
-          name: form.name,
-          email: form.email,
-          type: form.type,
-          password: form.password
-        })
-        router.push('/')
-      } catch (error) {
-        errorMessage.value = 'Registration failed. Please try again.'
-      }
-    }
-
-    return {
-      form,
-      errorMessage,
-      registerUser
-    }
-  }
-}
-</script>
 
 <style scoped>
 .form-container {
