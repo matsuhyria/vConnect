@@ -1,37 +1,48 @@
 import axios from 'axios'
+import state from './state'
+import router from './router'
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_ENDPOINT || 'http://localhost:3000/api/v1'
 })
 
 instance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+  if (state && state.token) {
+    config.headers.Authorization = `Bearer ${state.token}`
   }
   return config
 }, (error) => {
   return Promise.reject(error)
 })
 
-const storeToken = (token) => {
-  if (token) {
-    localStorage.setItem('token', token)
+const storeUserData = (data) => {
+  if (data) {
+    state.user = data.user
+    state.token = data.token
+    localStorage.setItem('userData', JSON.stringify(data))
   }
 }
 
 export default {
   login: async (data) => {
-    const response = await instance.post('users/login', data)
-    storeToken(response?.data?.token)
+    const { data: { message, ...response } } = await instance.post('users/login', data)
+    storeUserData(response)
+    return response
+  },
+  register: async (data) => {
+    const { data: { message, ...response } } = await instance.post('users/', data)
+    storeUserData(response)
     return response
   },
   logout: () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem('userData')
+    state.user = null
+    state.token = null
+    router.push('/')
   },
-  register: async (data) => {
-    const response = await instance.post('users/', data)
-    storeToken(response?.data?.token)
+  updateUser: async (data) => {
+    const { data: { message, ...response } } = await instance.patch('/users/' + state.user.id, data)
+    storeUserData(response)
     return response
   }
 }
