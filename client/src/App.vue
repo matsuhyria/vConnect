@@ -1,3 +1,15 @@
+<script setup>
+import Navbar from './components/Navbar.vue'
+import state from '@/state'
+
+const userData = JSON.parse(localStorage.getItem('userData'))
+
+if (userData) {
+  state.user = userData.user
+  state.token = userData.token
+}
+</script>
+
 <template>
   <div>
     <Navbar />
@@ -6,23 +18,11 @@
   </div>
 </template>
 
-<script>
-import Navbar from './components/Navbar.vue'
-
-export default {
-  components: {
-    Navbar
-  }
-}
-
-</script>
-
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 </style>

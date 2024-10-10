@@ -38,7 +38,7 @@ const registerUser = async () => {
 </script>
 
 <template>
-  <div class="mb-5">
+  <div class="mb-5 text-center">
     <img :src="`./logo-b.svg`" alt="logo" width="190" class="my-4" />
     <div class="wrapper m-auto border rounded">
       <div class="form-container mt-5">
