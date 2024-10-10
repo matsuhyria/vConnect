@@ -25,5 +25,13 @@ export default {
     const response = await instance.post('users/login', data)
     storeToken(response?.data?.token)
     return response
+  },
+  logout: () => {
+    localStorage.removeItem('token')
+  },
+  register: async (data) => {
+    const response = await instance.post('users/', data)
+    storeToken(response?.data?.token)
+    return response
   }
 }
