@@ -33,5 +33,11 @@ export default {
     const response = await instance.post('users/', data)
     storeToken(response?.data?.token)
     return response
+  },
+  getOrganizations: async () => {
+    return instance.get('/organizations')
+  },
+  createOrganization: async (organization) => {
+    return instance.post('/organizations', organization)
   }
 }
