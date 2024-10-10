@@ -26,7 +26,7 @@ const createUser = async (req, res) => {
         // Generate JWT token
         const token = generateToken({ userId: user._id, email, type: user.type });
 
-        res.status(201).json({ token, user: { id: user._id, email: user.email, type: user.type } });
+        res.status(201).json({ token, user: { id: user._id, name: user.name, email: user.email, type: user.type } });
     } catch (err) {
         console.error(err);
         return res.status(400).send({ message: err.message });
@@ -72,7 +72,7 @@ const loginUser = async (req, res) => {
         // Generate JWT token
         const token = generateToken({ userId: user._id, email, type: user.type });
 
-        res.status(200).json({ message: 'Login successful', token, user: { id: user._id, email: user.email, type: user.type } });
+        res.status(200).json({ message: 'Login successful', token, user: { id: user._id, name: user.name, email: user.email, type: user.type } });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
@@ -110,7 +110,7 @@ const updateUser = async (req, res) => {
         // Generate JWT token
         const token = generateToken({ userId: user._id, email, type: user.type });
 
-        res.status(200).json({ message: 'Update successful', token, user: { id: user._id, email: user.email, type: user.type } });
+        res.status(200).json({ message: 'Update successful', token, user: { id: user._id, name: user.name, email: user.email, type: user.type } });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ message: 'Server Error', err });
