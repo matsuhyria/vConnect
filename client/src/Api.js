@@ -44,5 +44,11 @@ export default {
     const { data: { message, ...response } } = await instance.patch('/users/' + state.user.id, data)
     storeUserData(response)
     return response
+  },
+  getOrganizations: async () => {
+    return instance.get('/organizations')
+  },
+  createOrganization: async (organization) => {
+    return instance.post('/organizations', organization)
   }
 }
