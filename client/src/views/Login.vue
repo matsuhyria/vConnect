@@ -2,7 +2,6 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '@/Api'
-import InputField from '@/components/InputField.vue'
 
 const form = reactive({
   email: '',
