@@ -98,7 +98,7 @@ const updateUser = async (req, res) => {
             res.status(400).json({ message: 'Invalid user type' });
         }
 
-        const encryptedPassword = await bcrypt.hash(password.toString(), saltRounds);
+        const encryptedPassword = password && await bcrypt.hash(password.toString(), saltRounds);
         const user = await User.findByIdAndUpdate(
             req.params.id,
             { $set: { name, email, password: encryptedPassword, type } },
