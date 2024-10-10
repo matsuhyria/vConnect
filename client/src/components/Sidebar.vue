@@ -30,20 +30,28 @@ onMounted(fetchOpportunities)
 <template>
   <div class="card upcoming-events">
     <div class="card-body">
-      <h5 class="card-title">Upcoming Events</h5>
-      <p class="card-text">Check out our featured volunteer opportunities.</p>
+      <h5 class="fw-bold">Upcoming Events</h5>
+      <p class="mb-4">Check out our featured volunteer opportunities</p>
 
       <div v-if="loading" class="loading">Loading opportunities...</div>
       <div v-if="error" class="error">{{ error }}</div>
 
-      <div v-for="opportunity in opportunities.slice(0, 5)" :key="opportunity.id" class="event-item">
-        <h6 class="event-title">{{ opportunity.title }}</h6>
+      <div v-for="opportunity in opportunities.slice(0, 5)" :key="opportunity.id" class="event-item mb-4">
+        <h6 class="fw-bold">{{ opportunity.title }}</h6>
         <p class="event-details">{{ formatDate(opportunity.date) }} | {{ opportunity.address }}</p>
-        <button class="btn btn-light">Sign Up</button>
+        <button class="btn btn-light border">Sign Up</button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.card {
+  max-width: 400px;
+  text-align: left;
+}
+
+.btn {
+  width: 200px;
+}
 </style>
