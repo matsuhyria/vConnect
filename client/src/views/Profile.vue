@@ -89,12 +89,14 @@ const updatePassword = async () => {
 </script>
 
 <template>
-  <div class="container mt-5 ">
+  <div class="container mt-5">
     <!-- User Info Card -->
     <div class="card border rounded-2 p-4 mb-4">
       <div class="d-flex justify-content-between mb-4">
         <h3 class="text-capitalize">{{ userProfile.name }}</h3>
-        <button @click="api.logout()" class="btn btn-link fw-bold">Logout</button>
+        <button @click="api.logout()" class="btn btn-link fw-bold">
+          Logout
+        </button>
       </div>
       <div class="row">
         <!-- Name Field -->
@@ -120,7 +122,7 @@ const updatePassword = async () => {
               <div v-else>
                 <button
                   @click="startEditingName"
-                  class="border-0 p-0 text-secondary"
+                  class="bg-transparent border-0 p-0 text-secondary"
                 >
                   Edit
                 </button>
@@ -156,7 +158,7 @@ const updatePassword = async () => {
               <div v-else>
                 <button
                   @click="startEditingEmail"
-                  class="border-0 p-0 text-secondary"
+                  class="bg-transparent border-0 p-0 text-secondary"
                 >
                   Edit
                 </button>
@@ -210,7 +212,6 @@ const updatePassword = async () => {
 
 <style scoped>
 .container {
-    max-width: 650px;
+  max-width: 650px;
 }
-
 </style>
