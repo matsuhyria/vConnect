@@ -43,10 +43,9 @@ export default {
         .filter(opportunity => opportunity.status === 'active')
         .sort((a, b) => new Date(a.date) - new Date(b.date))
 
-      console.log(activeOpportunities)
       return activeOpportunities
     } catch (error) {
-      console.error('Error getting opps')
+      console.error('Error getting opportunities')
       throw error
     }
   }

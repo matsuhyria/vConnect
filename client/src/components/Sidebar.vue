@@ -13,8 +13,7 @@ const formatDate = (date) => {
 
 const fetchOpportunities = async () => {
   try {
-    const data = await api.getUpcomingOpportunities()
-    opportunities.value = data
+    opportunities.value = await api.getUpcomingOpportunities()
   } catch (err) {
     error.value = 'Failed to load opportunities'
     console.error(err)
