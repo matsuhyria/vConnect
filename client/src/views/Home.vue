@@ -15,7 +15,7 @@ import Sidebar from '@/components/Sidebar.vue'
           <router-link to="/organizations" class="btn btn-light border">View Organizations</router-link>
         </div>
       </div>
-      <div class="col-12 col-lg-3 mt-4">
+      <div class="col-12 col-lg-3 mt-lg-0 mt-4">
         <Sidebar />
       </div>
     </div>

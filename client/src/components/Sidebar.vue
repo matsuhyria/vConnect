@@ -51,6 +51,6 @@ onMounted(fetchOpportunities)
 }
 
 .btn {
-  width: 200px;
+  width: 70%;
 }
 </style>
