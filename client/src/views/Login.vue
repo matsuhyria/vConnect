@@ -2,7 +2,6 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '@/Api'
-import InputField from '@/components/InputField.vue'
 
 const form = reactive({
   email: '',
@@ -31,7 +30,7 @@ const loginUser = async () => {
 </script>
 
 <template>
-  <div>
+  <div class="mb-5 text-center">
     <img :src="`./logo-b.svg`" alt="logo" width="190" class="my-4" />
     <div class="wrapper m-auto border rounded">
       <div class="form-container mt-5">
@@ -41,7 +40,9 @@ const loginUser = async () => {
         </div>
         <form @submit.prevent="loginUser">
           <div class="mb-3 text-start">
-            <label for="email" class="form-label fw-semibold">Email address</label>
+            <label for="email" class="form-label fw-semibold"
+              >Email address</label
+            >
             <input
               type="email"
               class="form-control"
@@ -51,7 +52,9 @@ const loginUser = async () => {
             />
           </div>
           <div class="mb-3 text-start">
-            <label for="password" class="form-label fw-semibold">Password</label>
+            <label for="password" class="form-label fw-semibold"
+              >Password</label
+            >
             <input
               type="password"
               class="form-control"
@@ -63,7 +66,8 @@ const loginUser = async () => {
           <button type="submit" class="btn btn-dark w-50 mt-3">Login</button>
         </form>
         <p class="mt-3 text-center">
-          Don't have an account? <router-link to="/register">Register</router-link>
+          Don't have an account?
+          <router-link to="/register">Register</router-link>
         </p>
       </div>
     </div>
