@@ -6,10 +6,21 @@ import MapIcon from '@/components/icons/MapIcon.vue'
 const opportunities = ref([])
 const loading = ref(true)
 const errorMessage = ref(null)
-
 // pagination
 let currentPage = 1
 let numberPages = 1
+
+const nextPage = () => {
+  if (currentPage < numberPages) {
+    fetchOpportunities(currentPage + 1)
+  }
+}
+
+const prevPage = () => {
+  if (currentPage > 1) {
+    fetchOpportunities(currentPage - 1)
+  }
+}
 
 const truncateDate = (date) => {
   const res = new Date(date)
@@ -44,9 +55,9 @@ const getActiveOpportunities = (opportunitiesList) => {
     .sort((a, b) => new Date(a.date) - new Date(b.date))
 }
 
-const fetchOpportunities = async () => {
+const fetchOpportunities = async (page) => {
   try {
-    const { data } = await api.getOpportunities()
+    const { data } = await api.getOpportunities(page)
 
     const fetchedOpportunities = data.data
     currentPage = data.page
@@ -110,11 +121,13 @@ onMounted(() => {
       </div>
       <nav>
         <ul class="pagination justify-content-center">
-          <li class="page-item"><a class="page-link text-black" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link text-black" href="#">Next</a></li>
+          <li class="page-item"><a class="page-link text-black" :class="{ disabled: currentPage === 1 }"
+              @click.prevent="prevPage">Previous</a></li>
+          <li class="page-item" v-for="page in numberPages" :key="page" :class="{ active: currentPage === page }">
+            <a class="page-link text-dark" @click.prevent="fetchOpportunities(page)">{{ page }}</a>
+          </li>
+          <li class="page-item"><a class="page-link text-black" :class="{ disabled: currentPage === numberPages }"
+              @click.prevent="nextPage">Next</a></li>
         </ul>
       </nav>
     </div>
@@ -122,4 +135,12 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.pagination {
+  cursor: pointer;
+}
+
+.pagination .active .page-link {
+  background-color: lightgray;
+  border-color: lightgray;
+}
 </style>
