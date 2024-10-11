@@ -13,7 +13,9 @@ const formatDate = (date) => {
 
 const fetchOpportunities = async () => {
   try {
-    opportunities.value = await api.getUpcomingOpportunities()
+    const { data } = await api.getOpportunities()
+    console.log(data)
+    opportunities.value = data.data
   } catch (err) {
     error.value = 'Failed to load opportunities'
     console.error(err)
@@ -35,7 +37,7 @@ onMounted(fetchOpportunities)
       <div v-if="loading" class="loading">Loading opportunities...</div>
       <div v-if="error" class="error">{{ error }}</div>
 
-      <div v-for="opportunity in opportunities.slice(0, 5)" :key="opportunity.id" class="event-item mb-4">
+      <div v-for="opportunity in opportunities.slice(0, 3)" :key="opportunity.id" class="event-item mb-4">
         <h6 class="fw-bold">{{ opportunity.title }}</h6>
         <p class="event-details">{{ formatDate(opportunity.date) }} | {{ opportunity.address }}</p>
         <button class="btn btn-light border">Sign Up</button>

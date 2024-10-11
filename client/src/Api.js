@@ -45,27 +45,14 @@ export default {
     storeUserData(response)
     return response
   },
-  getUpcomingOpportunities: async () => {
-    try {
-      const response = await instance.get('/opportunities')
-      const opportunities = response.data.data
-
-      const activeOpportunities = opportunities
-        .filter(opportunity => opportunity.status === 'active')
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
-
-      return activeOpportunities
-    } catch (error) {
-      console.error('API Error getting opportunities')
-      throw error
-    }
+  getOpportunities: async (page = 1) => {
+    return await instance.get(`/opportunities?page=${page}`)
   },
   getOrganizations: async () => {
     return instance.get('/organizations')
   },
   getOrganizationById: async (orgId) => {
-    const response = await instance.get(`/organizations/${orgId}`)
-    return response.data
+    return instance.get(`/organizations/${orgId}`)
   },
   createOrganization: async (organization) => {
     return instance.post('/organizations', organization)
