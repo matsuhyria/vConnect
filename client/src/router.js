@@ -46,8 +46,14 @@ const routes = [
       }
     }
   },
-  { path: '/organizations', component: Organizations },
-  { path: '/opportunities', component: Opportunities }
+  {
+    path: '/organizations',
+    component: Organizations
+  },
+  {
+    path: '/opportunities',
+    component: Opportunities
+  }
 ]
 
 const router = createRouter({

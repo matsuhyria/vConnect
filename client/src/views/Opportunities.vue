@@ -53,7 +53,7 @@ const truncateDate = (date) => {
 const matchOrganizationName = async (orgId) => {
   try {
     const organization = await api.getOrganizationById(orgId)
-    return organization.name
+    return organization.data.name
   } catch (error) {
     console.error('Error fetching organization name:', error)
     return null
