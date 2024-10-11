@@ -75,11 +75,11 @@ onMounted(() => {
         Ops!! No Opportunities to display
       </div>
       <div v-for="opportunity in opportunities" :key="opportunity.id" class="col-sm-6 col-lg-4 col-xxl-3 mb-4">
-        <div class="card">
-          <div class="card-body">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
             <h5 class="card-name fs-4 fw-semibold">{{ opportunity.title }}</h5>
             <p class="card-text text-secondary">{{ opportunity.description }}</p>
-            <p class="text-body-secondary">
+            <p class="text-body-secondary mt-auto">
               <MapIcon /> {{ truncateDate(opportunity.date) }}
             </p>
             <p class="text-body-secondary">
@@ -95,3 +95,7 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+
+</style>
