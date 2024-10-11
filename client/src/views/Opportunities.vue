@@ -22,6 +22,29 @@ const prevPage = () => {
   }
 }
 
+const getPageNumbers = () => {
+  const pages = []
+  const total = numberPages
+  const current = currentPage
+
+  // always show the first page
+  pages.push(1)
+
+  const range = 2 // number of pages to show around the current page
+
+  // add pages around the current page
+  for (let i = Math.max(2, current - range); i <= Math.min(total - 1, current + range); i++) {
+    pages.push(i)
+  }
+
+  // always show the last page if it's not already included
+  if (total > 1) {
+    pages.push(total)
+  }
+
+  return pages
+}
+
 const truncateDate = (date) => {
   const res = new Date(date)
   return res.toLocaleDateString('en-CA')
@@ -123,8 +146,11 @@ onMounted(() => {
         <ul class="pagination justify-content-center">
           <li class="page-item"><a class="page-link text-black" :class="{ disabled: currentPage === 1 }"
               @click.prevent="prevPage">Previous</a></li>
-          <li class="page-item" v-for="page in numberPages" :key="page" :class="{ active: currentPage === page }">
-            <a class="page-link text-dark" @click.prevent="fetchOpportunities(page)">{{ page }}</a>
+          <li class="page-item" v-for="page in getPageNumbers()" :key="page" :class="{ active: currentPage === page }">
+            <a class="page-link text-dark" :class="{ active: currentPage === page }"
+              @click.prevent="fetchOpportunities(page)">
+              {{ page }}
+            </a>
           </li>
           <li class="page-item"><a class="page-link text-black" :class="{ disabled: currentPage === numberPages }"
               @click.prevent="nextPage">Next</a></li>
