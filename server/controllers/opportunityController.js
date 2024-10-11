@@ -29,7 +29,7 @@ const createOpportunity = async (req, res) => {
 const getOpportunities = async (req, res) => {
 
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = parseInt(req.query.limit) || 8;
     const date = req.query.date;
 
     if (page <= 0 || limit <= 0) {
