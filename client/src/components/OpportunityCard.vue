@@ -32,7 +32,7 @@ const truncateDate = (date) => {
       </ul>
       <router-link
         :to="`/opportunities/${id}`"
-        class="btn border-secondary-subtle w-100"
+        class="btn border-secondary-subtle w-100 btn-light"
         >Read more</router-link
       >
     </div>

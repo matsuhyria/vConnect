@@ -100,7 +100,7 @@ onMounted(() => {
             <p class="text-body-secondary"><MapIcon /> {{ org.address }}</p>
             <router-link
               :to="`/organizations/${org._id}`"
-              class="btn border-secondary-subtle w-100"
+              class="btn border-secondary-subtle w-100 btn-light"
               >Read more</router-link
             >
           </div>
