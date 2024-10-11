@@ -39,7 +39,7 @@ const registerUser = async () => {
 
 <template>
   <div class="mb-5 text-center">
-    <img :src="`./logo-b.svg`" alt="logo" width="190" class="my-4" />
+    <img :src="`/logo-b.svg`" alt="logo" width="190" class="my-4" />
     <div class="wrapper m-auto border rounded">
       <div class="form-container mt-5">
         <h2 class="mb-4 text-center">Register</h2>
