@@ -56,12 +56,16 @@ export default {
 
       return activeOpportunities
     } catch (error) {
-      console.error('Error getting opportunities')
+      console.error('API Error getting opportunities')
       throw error
     }
   },
   getOrganizations: async () => {
     return instance.get('/organizations')
+  },
+  getOrganizationById: async (orgId) => {
+    const response = await instance.get(`/organizations/${orgId}`)
+    return response.data
   },
   createOrganization: async (organization) => {
     return instance.post('/organizations', organization)

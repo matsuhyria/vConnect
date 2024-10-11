@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue'
 import Register from '@/views/Register.vue'
 import Login from '@/views/Login.vue'
 import Organizations from '@/views/Organizations.vue'
+import Opportunities from '@/views/Opportunities.vue'
 import Profile from '@/views/Profile.vue'
 import { isAuthenticated } from './state'
 
@@ -45,7 +46,14 @@ const routes = [
       }
     }
   },
-  { path: '/organizations', component: Organizations }
+  {
+    path: '/organizations',
+    component: Organizations
+  },
+  {
+    path: '/opportunities',
+    component: Opportunities
+  }
 ]
 
 const router = createRouter({
