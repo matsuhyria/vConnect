@@ -35,7 +35,7 @@ const fetchOrganizationData = async () => {
 // Fetch opportunities data from API
 const fetchOpportunities = async () => {
   try {
-    const response = await api.getOpportunitiesByOrganizationId(organizationId)
+    const response = await api.getOpportunitiesPerOrganization(organizationId)
     opportunities.value = response.data
   } catch (error) {
     console.error('Failed to fetch opportunities', error)
