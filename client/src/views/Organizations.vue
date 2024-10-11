@@ -14,9 +14,7 @@ const newOrganization = ref({
   name: '',
   description: '',
   email: '',
-  address: '',
-  phone: '',
-  url: ''
+  address: ''
 })
 
 // Handle form submission for adding a new organization
@@ -28,9 +26,7 @@ const addOrganization = async () => {
       name: '',
       description: '',
       email: '',
-      address: '',
-      phone: '',
-      url: ''
+      address: ''
     }
     showModal.value = false
     fetchOrganizations() // Reload organizations after adding a new one
@@ -98,9 +94,15 @@ onMounted(() => {
         <div class="card">
           <div class="card-body">
             <h5 class="card-name fs-4 fw-semibold">{{ org.name }}</h5>
-            <p class="card-text text-secondary">{{ org.description }}</p>
+            <p class="card-text text-secondary">
+              {{ org.description.slice(0, 105) }}...
+            </p>
             <p class="text-body-secondary"><MapIcon /> {{ org.address }}</p>
-            <a href="#" class="btn border-secondary-subtle w-100">Read more</a>
+            <router-link
+              :to="`/organizations/${org._id}`"
+              class="btn border-secondary-subtle w-100"
+              >Read more</router-link
+            >
           </div>
         </div>
       </div>
@@ -168,25 +170,6 @@ onMounted(() => {
                   id="address"
                   v-model="newOrganization.address"
                   required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="phone" class="form-label fw-bold">Phone</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="phone"
-                  v-model="newOrganization.phone"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="url" class="form-label fw-bold">URL</label>
-                <input
-                  type="url"
-                  class="form-control"
-                  id="url"
-                  v-model="newOrganization.url"
                 />
               </div>
               <button type="submit" class="btn btn-dark my-3 align-self-end">
