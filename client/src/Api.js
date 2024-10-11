@@ -45,6 +45,7 @@ export default {
     storeUserData(response)
     return response
   },
+<<<<<<< Updated upstream
   getUpcomingOpportunities: async () => {
     try {
       const response = await instance.get('/opportunities')
@@ -59,6 +60,10 @@ export default {
       console.error('Error getting opportunities')
       throw error
     }
+=======
+  getOpportunities: async () => {
+    return await instance.get('/opportunities')
+>>>>>>> Stashed changes
   },
   getOrganizations: async () => {
     return instance.get('/organizations')
