@@ -63,11 +63,16 @@ export default {
   getOrganizations: async () => {
     return instance.get('/organizations')
   },
-  getOrganizationById: async (orgId) => {
-    const response = await instance.get(`/organizations/${orgId}`)
-    return response.data
-  },
   createOrganization: async (organization) => {
     return instance.post('/organizations', organization)
+  },
+  getOrganization: async (id) => {
+    return instance.get(`/organizations/${id}`)
+  },
+  getOpportunitiesByOrganizationId: async (id) => {
+    return instance.get(`/organizations/${id}/opportunities`)
+  },
+  createOpportunity: async (orgId, opportunity) => {
+    return instance.post(`/organizations/${orgId}/opportunities`, opportunity)
   }
 }
