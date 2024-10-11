@@ -6,6 +6,7 @@ import Login from '@/views/Login.vue'
 import Organizations from '@/views/Organizations.vue'
 import Opportunities from '@/views/Opportunities.vue'
 import Profile from '@/views/Profile.vue'
+import OrganizationDetails from '@/views/OrganizationDetails.vue'
 import { isAuthenticated } from './state'
 
 const routes = [
@@ -49,6 +50,10 @@ const routes = [
   {
     path: '/organizations',
     component: Organizations
+  },
+  {
+    path: '/organizations/:id',
+    component: OrganizationDetails
   },
   {
     path: '/opportunities',

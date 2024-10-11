@@ -10,7 +10,7 @@ const username = computed(() => state?.user?.name)
     <nav class="container-fluid d-flex justify-content-between p-0 px-sm-2">
       <div>
         <a href="/" class="navbar-brand text-white">
-          <img :src="`./logo-w.svg`" alt="Logo" width="40" />
+          <img :src="`/logo-w.svg`" alt="Logo" width="40" />
         </a>
       </div>
       <ul class="nav me-auto">
