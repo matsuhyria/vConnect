@@ -11,6 +11,7 @@ import CalendarIcon from '@/components/icons/CalendarIcon.vue'
 const route = useRoute()
 const opportunity = ref({})
 const organization = ref({})
+const volunteersSignedUp = ref({})
 
 // Fetch opportunity data from API
 const fetchOpportunityData = async () => {
@@ -31,16 +32,25 @@ const fetchOpportunityData = async () => {
 // Sign up for the opportunity
 const signUpForOpportunity = async () => {
   try {
-    await api.signUpForOpportunity(opportunity.value._id)
-    alert('Successfully signed up for the opportunity!')
+    await api.createRegistration(route.params.id)
   } catch (error) {
     console.error('Failed to sign up', error)
+  }
+}
+
+const getRegistrationsForOpportunity = async () => {
+  try {
+    const registrations = await api.getRegistrationsPerOpportunity(route.params.id)
+    volunteersSignedUp.value = registrations.data.length
+  } catch (error) {
+    console.error('Failed retrieving registrations')
   }
 }
 
 // Fetch data on component mount
 onMounted(() => {
   fetchOpportunityData()
+  getRegistrationsForOpportunity()
 })
 </script>
 
@@ -51,19 +61,19 @@ onMounted(() => {
         <h1 class="h2 fw-bold">{{ opportunity.title }}</h1>
         <p class="text-body-secondary">{{ organization.name }}</p>
         <ul class="text-body-secondary list-inline">
-          <li class="list-inline-item pe-5"><CalendarIcon />{{ truncateDate(opportunity.date)}}</li>
+          <li class="list-inline-item pe-5"><CalendarIcon class="me-1"/>{{ truncateDate(opportunity.date)}}</li>
           <li class="list-inline-item"><MapIcon />{{ opportunity.address }}</li>
         </ul>
 
-        <div class="mb-4">
-          <h4>Description</h4>
+        <div class="my-5">
+          <h5 class="fw-bold">Description</h5>
           <p>{{ opportunity.description }}</p>
         </div>
 
         <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
           <p class="m-0">
             <LockIcon />
-            40 volunteers already signed up
+            {{ volunteersSignedUp }} volunteers already signed up
           </p>
 
           <button class="btn btn-dark" @click="signUpForOpportunity">

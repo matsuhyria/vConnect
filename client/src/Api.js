@@ -46,10 +46,10 @@ export default {
     return response
   },
   getOpportunities: async (page = 1) => {
-    return await instance.get(`/opportunities?page=${page}`)
+    return instance.get(`/opportunities?page=${page}`)
   },
   getOpportunity: async (id) => {
-    return await instance.get(`/opportunities/${id}`)
+    return instance.get(`/opportunities/${id}`)
   },
   getOrganizations: async () => {
     return instance.get('/organizations')
@@ -71,5 +71,11 @@ export default {
   },
   deleteOpportunities: async () => {
     return instance.delete('/opportunities')
+  },
+  getRegistrationsPerOpportunity: async (id) => {
+    return instance.get(`/opportunities/${id}/registrations`)
+  },
+  createRegistration: async (id) => {
+    return instance.post(`/opportunities/${id}/registrations`)
   }
 }
