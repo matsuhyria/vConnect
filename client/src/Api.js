@@ -48,6 +48,9 @@ export default {
   getOpportunities: async (page = 1) => {
     return await instance.get(`/opportunities?page=${page}`)
   },
+  getOpportunity: async (id) => {
+    return await instance.get(`/opportunities/${id}`)
+  },
   getOrganizations: async () => {
     return instance.get('/organizations')
   },

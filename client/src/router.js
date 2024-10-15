@@ -5,6 +5,7 @@ import Register from '@/views/Register.vue'
 import Login from '@/views/Login.vue'
 import Organizations from '@/views/Organizations.vue'
 import Opportunities from '@/views/Opportunities.vue'
+import OpportunityDetails from '@/views/OpportunityDetails.vue'
 import Profile from '@/views/Profile.vue'
 import OrganizationDetails from '@/views/OrganizationDetails.vue'
 import { isAuthenticated } from './state'
@@ -58,6 +59,10 @@ const routes = [
   {
     path: '/opportunities',
     component: Opportunities
+  },
+  {
+    path: '/opportunities/:id',
+    component: OpportunityDetails
   }
 ]
 
