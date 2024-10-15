@@ -65,5 +65,8 @@ export default {
   },
   createOpportunity: async (orgId, opportunity) => {
     return instance.post(`/organizations/${orgId}/opportunities`, opportunity)
+  },
+  deleteOpportunities: async () => {
+    return instance.delete('/opportunities')
   }
 }

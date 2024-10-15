@@ -19,4 +19,8 @@ export const isRepresentative = (id) => {
   return id ? id === user.id : true
 }
 
+export const isAdmin = () => {
+  return state.user?.type === 'admin'
+}
+
 export default state

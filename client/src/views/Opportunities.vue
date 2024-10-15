@@ -2,10 +2,23 @@
 import { ref, onMounted } from 'vue'
 import api from '@/Api'
 import OpportunityCard from '@/components/OpportunityCard.vue'
+import { isAdmin } from '@/state'
 
 const opportunities = ref([])
 const loading = ref(true)
 const errorMessage = ref(null)
+const confirmRemoveModal = ref(false)
+
+const removeAllOpportunities = async () => {
+  try {
+    await api.deleteOpportunities()
+    fetchOpportunities()
+    confirmRemoveModal.value = false
+  } catch (error) {
+    console.error('Failed to remove opportunities', error)
+  }
+}
+
 // pagination
 let currentPage = 1
 let numberPages = 1
@@ -108,12 +121,19 @@ onMounted(() => {
       class="d-flex flex-column flex-md-row justify-content-between align-items-start mb-4"
     >
       <div class="text-start">
-        <h1 class="h2 fw-bold">Volunteer Opportunities</h1>
+        <h1 class="h2 fw-bold">Volunteering Opportunities</h1>
         <p class="text-body-secondary">
           Find the perfect volunteering opportunity that matches your interests
           and availability
         </p>
       </div>
+      <button
+        class="btn btn-danger"
+        @click="confirmRemoveModal = true"
+        v-if="opportunities.length && isAdmin()"
+      >
+        Remove all opportunities
+      </button>
     </div>
 
     <div v-if="loading" class="text-center my-5">
@@ -142,7 +162,7 @@ onMounted(() => {
           :organization="opportunity.organizationName"
         />
       </div>
-      <nav>
+      <nav class="mt-5" v-if="numberPages > 1">
         <ul class="pagination justify-content-center">
           <li class="page-item">
             <a
@@ -176,6 +196,47 @@ onMounted(() => {
           </li>
         </ul>
       </nav>
+    </div>
+    <!-- Confirmation Modal -->
+    <div
+      v-if="confirmRemoveModal"
+      class="modal fade show"
+      style="display: block; background: rgba(0, 0, 0, 0.5)"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirm Removal</h5>
+            <button
+              type="button"
+              class="btn-close"
+              @click="confirmRemoveModal = false"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Are you sure you want to remove all opportunities? This action
+              cannot be undone.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-dark"
+              @click="confirmRemoveModal = false"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              @click="removeAllOpportunities"
+            >
+              Remove All
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
