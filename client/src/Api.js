@@ -57,6 +57,9 @@ export default {
   getOrganization: async (id) => {
     return instance.get(`/organizations/${id}`)
   },
+  updateOrganization: async (id, organization) => {
+    return instance.put(`/organizations/${id}`, organization)
+  },
   getOpportunitiesPerOrganization: async (id) => {
     return instance.get(`/organizations/${id}/opportunities`)
   },
