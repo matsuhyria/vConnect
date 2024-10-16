@@ -36,6 +36,6 @@ router.route(`${BASE_PATH}/opportunities/:id/registrations`)
     // Create a new registration when the endpoint is hit with a POST request
     .post(verifyAccess({ requiredType: 'volunteer' }), createRegistration)
     // Retrieve all registrations for a given opportunity
-    .get(verifyAccess({ requiredType: 'volunteer' }), getRegistrationsPerOpportunity);
+    .get(getRegistrationsPerOpportunity);
 
 module.exports = router;
