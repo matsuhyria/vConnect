@@ -45,8 +45,11 @@ export default {
     storeUserData(response)
     return response
   },
-  getOpportunities: async (page = 1) => {
-    return await instance.get(`/opportunities?page=${page}`)
+  getOpportunities: async (page = 1, date) => {
+    const query = date
+      ? `/opportunities?page=${page}&date=${date}`
+      : `/opportunities?page=${page}`
+    return instance.get(query)
   },
   getOrganizations: async () => {
     return instance.get('/organizations')

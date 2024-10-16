@@ -8,6 +8,7 @@ const opportunities = ref([])
 const loading = ref(true)
 const errorMessage = ref(null)
 const confirmRemoveModal = ref(false)
+const selectedDate = ref(null)
 
 const removeAllOpportunities = async () => {
   try {
@@ -94,11 +95,13 @@ const getActiveOpportunities = (opportunitiesList) => {
 
 const fetchOpportunities = async (page) => {
   try {
-    const { data } = await api.getOpportunities(page)
+    const { data } = await api.getOpportunities(page, selectedDate.value)
 
     const fetchedOpportunities = data.data
     currentPage = data.page
+    console.log(currentPage)
     numberPages = data.totalPages
+    console.log(numberPages)
 
     const activeOpportunities = getActiveOpportunities(fetchedOpportunities)
 
@@ -127,13 +130,20 @@ onMounted(() => {
           and availability
         </p>
       </div>
-      <button
+      <div>
+        <button
         class="btn btn-danger"
         @click="confirmRemoveModal = true"
         v-if="opportunities.length && isAdmin()"
       >
         Remove all opportunities
       </button>
+
+      <div>
+        <input type="date" id="filterDate" v-model="selectedDate" min="2024-01-01" class="form-control"/>
+        <button @click="fetchOpportunities" class="btn border-secondary-subtle w-100 btn-light">Filter</button>
+      </div>
+      </div>
     </div>
 
     <div v-if="loading" class="text-center my-5">
