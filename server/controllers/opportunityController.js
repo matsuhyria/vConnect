@@ -46,15 +46,20 @@ const getOpportunities = async (req, res) => {
     try {
         let query = Opportunity.find();
 
+        // Apply date filtration to the query
         query = applyDateFiltration(query, date);
+
+        // Clone the query before applying pagination to reuse for counting
+        const countQuery = query.clone(); // Clone the filtered query for count
 
         query = applyPagination(query, page, limit);
 
         const opportunities = await query.exec();
+        console.log(opportunities);
 
         if (!opportunities) return res.status(404).json({ message: 'Opportunities not found' });
 
-        const itemsCount = await Opportunity.countDocuments();
+        const itemsCount = await countQuery.countDocuments().exec();
         const totalPages = Math.ceil(itemsCount / limit);
 
         res.status(200).json({
