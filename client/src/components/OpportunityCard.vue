@@ -2,6 +2,7 @@
 import MapIcon from '@/components/icons/MapIcon.vue'
 import CalendarIcon from '@/components/icons/CalendarIcon.vue'
 import BuildingIcon from '@/components/icons/BuildingIcon.vue'
+import { truncateDate } from '@/utils/utils.js'
 
 defineProps({
   id: String,
@@ -11,11 +12,6 @@ defineProps({
   address: String,
   organization: String
 })
-
-const truncateDate = (date) => {
-  const res = new Date(date)
-  return res.toLocaleDateString('en-SE')
-}
 </script>
 
 <template>
