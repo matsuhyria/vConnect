@@ -99,9 +99,7 @@ const fetchOpportunities = async (page) => {
 
     const fetchedOpportunities = data.data
     currentPage = data.page
-    console.log(currentPage)
     numberPages = data.totalPages
-    console.log(numberPages)
 
     const activeOpportunities = getActiveOpportunities(fetchedOpportunities)
 
