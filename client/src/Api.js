@@ -45,8 +45,8 @@ export default {
     storeUserData(response)
     return response
   },
-  getOpportunities: async (page = 1) => {
-    return instance.get(`/opportunities?page=${page}`)
+  getOpportunities: async (page, date) => {
+    return instance.get(`/opportunities?page=${page}&date=${date}`)
   },
   getOpportunity: async (id) => {
     return instance.get(`/opportunities/${id}`)

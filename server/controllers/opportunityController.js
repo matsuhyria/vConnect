@@ -30,23 +30,24 @@ const getOpportunities = async (req, res) => {
 
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 8;
-    const date = req.query.date;
+    const date = req.query.date && req.query.date !== 'null' ? req.query.date : new Date();
 
     if (page <= 0 || limit <= 0) {
         return res.status(400).json({ message: 'Invalid page or limit parameter. It must be a positive integer.' });
     }
-
-    if (date) {
-        const parsedDate = new Date(date);
-        if (isNaN(parsedDate.getTime())) {
-            return res.status(400).json({ message: 'Invalid date format. Please provide a valid date in the YYYY-MM-DD' });
-        }
+    
+    const parsedDate = new Date(date);
+    if (isNaN(parsedDate.getTime())) {
+        return res.status(400).json({ message: 'Invalid date format. Please provide a valid date in the YYYY-MM-DD format.' });
     }
 
     try {
         let query = Opportunity.find();
 
-        query = applyDateFiltration(query, date);
+        // Apply date filtration to the query
+        query = applyDateFiltration(query, parsedDate);
+
+        const countQuery = query.clone(); // Clone the filtered query for count
 
         query = applyPagination(query, page, limit);
 
@@ -54,7 +55,7 @@ const getOpportunities = async (req, res) => {
 
         if (!opportunities) return res.status(404).json({ message: 'Opportunities not found' });
 
-        const itemsCount = await Opportunity.countDocuments();
+        const itemsCount = await countQuery.countDocuments().exec();
         const totalPages = Math.ceil(itemsCount / limit);
 
         res.status(200).json({
@@ -92,31 +93,10 @@ const deleteAllOpportunities = async (req, res) => {
 };
 
 const getOpportunitiesPerOrganization = async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const date = req.query.date;
-
-    if (page <= 0 || limit <= 0) {
-        return res.status(400).json({ message: 'Invalid page or limit parameter. It must be a positive integer.' });
-    }
-
-    if (date) {
-        const parsedDate = new Date(date);
-        if (isNaN(parsedDate.getTime())) {
-            return res.status(400).json({ message: 'Invalid date format. Please provide a valid date in the YYYY-MM-DD' });
-        }
-    }
-
     const { organizationId } = req.params;
 
     try {
-
         let query = Opportunity.find({ organizationId });
-
-        query = applyDateFiltration(query, date);
-
-        query = applyPagination(query, page, limit);
-
         const opportunities = await query.exec();
         if (!opportunities) return res.status(404).json({ message: 'Opportunities for this organization not found' });
         res.status(200).json(opportunities);
