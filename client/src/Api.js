@@ -77,5 +77,8 @@ export default {
   },
   createRegistration: async (id) => {
     return instance.post(`/opportunities/${id}/registrations`)
+  },
+  updateRegisterationById: async (id, data) => {
+    return instance.patch(`/registrations/${id}`, data)
   }
 }

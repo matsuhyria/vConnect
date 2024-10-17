@@ -95,7 +95,7 @@ onMounted(() => {
           <div class="card-body">
             <h5 class="card-name fs-4 fw-semibold">{{ org.name }}</h5>
             <p class="card-text text-secondary">
-              {{ org.description.slice(0, 105) }}...
+              {{ org.description?.slice(0, 105) }}...
             </p>
             <p class="text-body-secondary"><MapIcon /> {{ org.address }}</p>
             <router-link

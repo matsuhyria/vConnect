@@ -140,7 +140,7 @@ const updatePassword = async () => {
           <label for="email" class="form-label">Email</label>
           <div class="d-flex align-items-center gap-3">
             <input
-              type="text"
+              type="email"
               v-model="userProfile.email"
               class="form-control"
               :readonly="!editingEmail"
