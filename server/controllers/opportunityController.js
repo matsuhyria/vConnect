@@ -30,32 +30,28 @@ const getOpportunities = async (req, res) => {
 
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 8;
-    const date = req.query.date;
+    const date = req.query.date && req.query.date !== 'null' ? req.query.date : new Date();
 
     if (page <= 0 || limit <= 0) {
         return res.status(400).json({ message: 'Invalid page or limit parameter. It must be a positive integer.' });
     }
-
-    if (date) {
-        const parsedDate = new Date(date);
-        if (isNaN(parsedDate.getTime())) {
-            return res.status(400).json({ message: 'Invalid date format. Please provide a valid date in the YYYY-MM-DD' });
-        }
+    
+    const parsedDate = new Date(date);
+    if (isNaN(parsedDate.getTime())) {
+        return res.status(400).json({ message: 'Invalid date format. Please provide a valid date in the YYYY-MM-DD format.' });
     }
 
     try {
         let query = Opportunity.find();
 
         // Apply date filtration to the query
-        query = applyDateFiltration(query, date);
+        query = applyDateFiltration(query, parsedDate);
 
-        // Clone the query before applying pagination to reuse for counting
         const countQuery = query.clone(); // Clone the filtered query for count
 
         query = applyPagination(query, page, limit);
 
         const opportunities = await query.exec();
-        console.log(opportunities);
 
         if (!opportunities) return res.status(404).json({ message: 'Opportunities not found' });
 
