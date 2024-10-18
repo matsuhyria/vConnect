@@ -9,7 +9,7 @@ import Sidebar from '@/components/Sidebar.vue'
 import LockIcon from '@/components/icons/LockIcon.vue'
 import MapIcon from '@/components/icons/MapIcon.vue'
 import CalendarIcon from '@/components/icons/CalendarIcon.vue'
-import state, { isRepresentative } from '@/state'
+import state, { isVolunteer } from '@/state'
 
 const route = useRoute()
 const router = useRouter()
@@ -21,13 +21,19 @@ const registrations = ref([])
 const showQRCodeModalVisible = ref(false)
 const scanQRCodeModalVisible = ref(false)
 
-const qrcodeValue = ref('')
+const opportunityId = route.params.id
+const qrcodeValue = ref()
+
+const isManagedByUser = (managingUserId) => {
+  return managingUserId === state.user?.id
+}
+
+const isUserSignedUp = (registrations) => {
+  return registrations?.find((reg) => reg.user === state.user?.id)
+}
 
 // Fetch opportunity data from API
 const fetchOpportunityData = async () => {
-  const opportunityId = route.params.id
-  qrcodeValue.value = opportunityId
-
   try {
     const response = await api.getOpportunity(opportunityId)
     opportunity.value = response.data
@@ -43,7 +49,7 @@ const fetchOpportunityData = async () => {
 // Sign up for the opportunity
 const signUpForOpportunity = async () => {
   try {
-    await api.createRegistration(route.params.id)
+    await api.createRegistration(opportunityId)
   } catch (error) {
     console.error('Failed to sign up', error)
     if (error.response?.status === 401) {
@@ -54,7 +60,7 @@ const signUpForOpportunity = async () => {
 
 const getRegistrationsForOpportunity = async () => {
   try {
-    const { data } = await api.getRegistrationsPerOpportunity(route.params.id)
+    const { data } = await api.getRegistrationsPerOpportunity(opportunityId)
     registrations.value = data
   } catch (error) {
     console.error('Failed retrieving registrations', error)
@@ -65,25 +71,26 @@ const onDetect = async (result) => {
   console.log('QR Code detected:', result)
 
   try {
-    if (result[0].rawValue === opportunity.value._id) {
-      const registration = isUserSignedUp(registrations.value)
-      await api.updateRegisterationById(registration._id, {
-        status: 'confirmed'
-      })
-      scanQRCodeModalVisible.value = false
-      getRegistrationsForOpportunity()
-    }
+    const registration = isUserSignedUp(registrations.value)
+    await api.confirmAttendance(
+      opportunity.value._id,
+      registration._id,
+      result[0].rawValue
+    )
+    scanQRCodeModalVisible.value = false
+    getRegistrationsForOpportunity()
   } catch (error) {
     console.error('Failed to confirm attendance', error)
   }
 }
 
-const isManagedByUser = (managingUserId) => {
-  return managingUserId === state.user?.id
-}
-
-const isUserSignedUp = (registrations) => {
-  return registrations?.find((reg) => reg.user === state.user?.id)
+const showQRCodeModal = async () => {
+  showQRCodeModalVisible.value = true
+  const { data } = await api.encryptOpportunityId(
+    organization.value._id,
+    opportunity.value._id
+  )
+  qrcodeValue.value = data
 }
 
 // Fetch data on component mount
@@ -123,7 +130,7 @@ onMounted(() => {
           <button
             v-if="isManagedByUser(organization.managed_by)"
             class="btn border-secondary-subtle btn-light px-5"
-            @click="showQRCodeModalVisible = true"
+            @click="showQRCodeModal"
           >
             Show QR Code
           </button>
@@ -145,7 +152,7 @@ onMounted(() => {
           </button>
 
           <button
-            v-else-if="!isRepresentative()"
+            v-else-if="isVolunteer()"
             class="btn btn-dark"
             @click="signUpForOpportunity"
           >
@@ -164,16 +171,23 @@ onMounted(() => {
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Signup QR Code</h5>
+          <div class="modal-header border-0">
             <button
               type="button"
               class="btn-close"
               @click="showQRCodeModalVisible = false"
             ></button>
           </div>
-          <div class="modal-body text-center">
-            <qrcode-vue :value="qrcodeValue" level="q" size="400" />
+          <div class="modal-body text-center py-5 my-5">
+            <qrcode-vue
+              v-if="qrcodeValue"
+              :value="qrcodeValue"
+              level="H"
+              size="250"
+            />
+            <div class="spinner-border" role="status" v-else>
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
         </div>
       </div>
