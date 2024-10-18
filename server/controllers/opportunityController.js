@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const Opportunity = require('../models/opportunity');
 const Registration = require('../models/registration');
 const { applyPagination, applyDateFiltration } = require('../helpers/queryUtils');
@@ -137,6 +138,17 @@ const deleteOpportunity = async (req, res) => {
     }
 };
 
+const encryptOpportunityId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const encryptedId = await bcrypt.hash(id, 10);
+        res.status(200).json(encryptedId);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Server Error', err });
+    }
+};
+
 module.exports = {
     createOpportunity,
     getOpportunities,
@@ -144,5 +156,6 @@ module.exports = {
     getOpportunity,
     getOpportunitiesPerOrganization,
     updateOpportunity,
-    deleteOpportunity
+    deleteOpportunity,
+    encryptOpportunityId
 };

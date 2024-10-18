@@ -77,5 +77,11 @@ export default {
   },
   createRegistration: async (id) => {
     return instance.post(`/opportunities/${id}/registrations`)
+  },
+  encryptOpportunityId: async (orgId, id) => {
+    return instance.get(`/organizations/${orgId}/opportunities/${id}/encrypt-id`)
+  },
+  confirmAttendance: async (opportunityId, id, data) => {
+    return instance.post(`/opportunities/${opportunityId}/registrations/${id}/confirm-attendance`, { encryptedOpportunityId: data })
   }
 }

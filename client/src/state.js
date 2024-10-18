@@ -23,4 +23,8 @@ export const isAdmin = () => {
   return state.user?.type === 'admin'
 }
 
+export const isVolunteer = () => {
+  return state.user?.type === 'volunteer'
+}
+
 export default state

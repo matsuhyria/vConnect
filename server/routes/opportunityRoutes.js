@@ -9,7 +9,8 @@ const {
     getOpportunitiesPerOrganization,
     deleteAllOpportunities,
     updateOpportunity,
-    deleteOpportunity
+    deleteOpportunity,
+    encryptOpportunityId
 } = require('../controllers/opportunityController');
 const verifyAccess = require('../middlewares/auth/verifyAccess');
 const verifyOrganizationManager = require('../middlewares/auth/verifyOrganizationManager');
@@ -50,6 +51,14 @@ router.route(`${BASE_PATH}/organizations/:organizationId/opportunities/:id`)
         deleteOpportunity
     );
 
+router.route(`${BASE_PATH}/organizations/:organizationId/opportunities/:id/encrypt-id`)
+    // Encrypt opportunity ID
+    .get(
+        verifyAccess({ requiredType: 'organization_representative' }),
+        verifyOrganizationManager(),
+        encryptOpportunityId
+    );
+
 
 // Define route parameters and HTTP methods for individual opportunities.
 router.route(`${BASE_PATH}/organizations/:organizationId/opportunities`)
@@ -61,6 +70,5 @@ router.route(`${BASE_PATH}/organizations/:organizationId/opportunities`)
         verifyOrganizationManager(),
         createOpportunity
     );
-
 
 module.exports = router;

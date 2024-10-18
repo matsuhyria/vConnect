@@ -36,7 +36,7 @@ onMounted(fetchOpportunities)
       <div v-if="error" class="error">{{ error }}</div>
 
       <div
-        v-for="opportunity in opportunities.slice(0, 3)"
+        v-for="opportunity in opportunities?.slice(0, 3)"
         :key="opportunity.id"
         class="event-item mb-4"
       >

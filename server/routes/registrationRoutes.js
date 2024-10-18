@@ -8,7 +8,8 @@ const {
     getRegistrationById,
     getRegistrationsPerOpportunity,
     updateRegistrationById,
-    deleteRegistrationById
+    deleteRegistrationById,
+    confirmAttendance
 } = require('../controllers/registrationController');
 const verifyAccess = require('../middlewares/auth/verifyAccess');
 const verifyRegistrationOwnership = require('../middlewares/auth/verifyRegistrationOwnership');
@@ -37,5 +38,11 @@ router.route(`${BASE_PATH}/opportunities/:id/registrations`)
     .post(verifyAccess({ requiredType: 'volunteer' }), createRegistration)
     // Retrieve all registrations for a given opportunity
     .get(getRegistrationsPerOpportunity);
+
+// POST /api/registration/confirm-attendance
+router.route(`${BASE_PATH}/opportunities/:opportunityId/registrations/:id/confirm-attendance`)
+    // confirm attendance
+    .post(verifyAccess({ requiredType: 'volunteer' }), verifyRegistrationOwnership(), confirmAttendance);
+
 
 module.exports = router;

@@ -17,14 +17,14 @@ const username = computed(() => state?.user?.name)
         <li class="nav-item">
           <router-link
             to="/opportunities"
-            class="nav-link text-white px-1 px-md-3"
+            class="nav-link text-white p-0 mx-1 mx-md-3"
             >Opportunities</router-link
           >
         </li>
         <li class="nav-item">
           <router-link
             to="/organizations"
-            class="nav-link text-white px-1 px-md-3"
+            class="nav-link text-white p-0 mx-1 mx-md-3"
             >Organizations</router-link
           >
         </li>
@@ -49,5 +49,9 @@ const username = computed(() => state?.user?.name)
 <style scoped>
 .navbar {
   padding: 1rem;
+}
+
+.router-link-exact-active {
+  border-bottom: 1px solid;
 }
 </style>
