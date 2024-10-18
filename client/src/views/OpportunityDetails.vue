@@ -1,7 +1,7 @@
 <script setup>
 import api from '@/Api'
 import { ref, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import QrcodeVue from 'qrcode.vue'
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { truncateDate } from '@/utils/utils.js'
@@ -12,7 +12,6 @@ import CalendarIcon from '@/components/icons/CalendarIcon.vue'
 import state, { isVolunteer } from '@/state'
 
 const route = useRoute()
-const router = useRouter()
 
 const opportunity = ref({})
 const organization = ref({})
@@ -52,9 +51,6 @@ const signUpForOpportunity = async () => {
     await api.createRegistration(opportunityId)
   } catch (error) {
     console.error('Failed to sign up', error)
-    if (error.response?.status === 401) {
-      router.push('/login')
-    }
   }
 }
 
