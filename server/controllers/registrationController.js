@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const Registration = require('../models/registration');
 const Opportunity = require('../models/opportunity');
 
@@ -113,11 +114,46 @@ const deleteRegistrationById = async (req, res) => {
     }
 };
 
+const confirmAttendance = async (req, res) => {
+    try {
+        const { opportunityId, id } = req.params;
+        const { encryptedOpportunityId } = req.body;
+        console.log('encryptedOpportunityId', encryptedOpportunityId);
+        console.log('opportunityId', opportunityId);
+
+
+        const isMatchingOpportunity = await bcrypt.compare(opportunityId, encryptedOpportunityId);
+        console.log('isMatchingOpportunity', isMatchingOpportunity);
+
+        if (!isMatchingOpportunity) {
+            return res.status(400).json({ message: 'Invalid ID' });
+        }
+
+        const registration = await Registration.findByIdAndUpdate(
+            id,
+            { $set: { status: 'confirmed' } },
+            { new: true }
+        );
+
+        if (!registration) {
+            return res.status(404).json({ message: 'Registration not found' });
+        }
+
+        res.status(200).json({ message: 'Attendance confirmed', registration });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Failed to confirm attendance' });
+    }
+
+};
+
 module.exports = {
     createRegistration,
     getAllUserRegistrations,
     getRegistrationById,
     getRegistrationsPerOpportunity,
     updateRegistrationById,
-    deleteRegistrationById
+    deleteRegistrationById,
+    confirmAttendance
 };
