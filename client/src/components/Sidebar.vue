@@ -44,14 +44,16 @@ onMounted(fetchOpportunities)
         <p class="event-details">
           {{ formatDate(opportunity.date) }} | {{ opportunity.address }}
         </p>
-        <button class="btn btn-light border">Sign Up</button>
+        <router-link
+        :to="`/opportunities/${id}`"
+        class="btn border-secondary-subtle w-50 btn-light"
+        >Sign Up</router-link
+      >
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.btn {
-  width: 70%;
-}
+
 </style>
