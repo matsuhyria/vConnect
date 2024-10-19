@@ -530,7 +530,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Organization\",\n    \"description\": \"A great cause\",\n    \"email\": \"info@org.com\",\n    \"address\": \"987 Main St, City\",\n    \"rating\": 1\n}",
+							"raw": "{\n    \"name\": \"Organization\",\n    \"description\": \"A great cause\",\n    \"email\": \"info@org.com\",\n    \"address\": \"987 Main St, City\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -640,7 +640,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Best Organization\",\n  \"description\": \"An incredible cause\",\n  \"email\": \"updated.info@org.com\",\n  \"address\": \"456 Updated Address\",\n  \"rating\": 5.0\n}",
+							"raw": "{\n  \"name\": \"Best Organization\",\n  \"description\": \"An incredible cause\",\n  \"email\": \"updated.info@org.com\",\n  \"address\": \"456 Updated Address\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
