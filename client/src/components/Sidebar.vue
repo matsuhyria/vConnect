@@ -27,7 +27,7 @@ onMounted(fetchOpportunities)
 </script>
 
 <template>
-  <div class="card">
+  <div v-if="opportunities && opportunities.length" class="card">
     <div class="card-body py-4">
       <h5 class="fw-bold">Upcoming Events</h5>
       <p class="mb-4">Check out our featured volunteer opportunities</p>
@@ -36,7 +36,7 @@ onMounted(fetchOpportunities)
       <div v-if="error" class="error">{{ error }}</div>
 
       <div
-        v-for="opportunity in opportunities?.slice(0, 3)"
+        v-for="opportunity in opportunities.slice(0, 3)"
         :key="opportunity.id"
         class="event-item mb-4"
       >
@@ -50,6 +50,12 @@ onMounted(fetchOpportunities)
         >Sign Up</router-link
       >
       </div>
+    </div>
+  </div>
+  <div v-else class="card empty-card">
+    <div class="card-body py-4">
+      <h5 class="fw-bold">No Upcoming Events</h5>
+      <p class="mb-4">Check back later for volunteer opportunities</p>
     </div>
   </div>
 </template>
