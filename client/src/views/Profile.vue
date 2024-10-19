@@ -17,6 +17,8 @@ const passwordError = ref(null)
 const nameError = ref(null)
 const emailError = ref(null)
 
+const MIN_PASS_LENGTH = 3
+
 // Edit and Save Name
 const startEditingName = () => {
   editingName.value = true
@@ -48,6 +50,13 @@ const startEditingEmail = () => {
 
 const saveEmail = async () => {
   try {
+    const emailExists = await api.checkEmail(userProfile.value.email)
+    
+    if (emailExists) {
+      emailError.value = 'Email already exists. Please use a different email.'
+      return
+    }
+
     await api.updateUser({ email: userProfile.value.email })
     editingEmail.value = false
     emailError.value = null // Clear the error message
@@ -67,6 +76,11 @@ const cancelEditEmail = () => {
 
 // Update Password
 const updatePassword = async () => {
+  if (newPassword.value.length < MIN_PASS_LENGTH) {
+    passwordError.value = 'Password must be at least 3 characters long'
+    return
+  }
+
   if (newPassword.value !== confirmPassword.value) {
     passwordError.value = 'Passwords do not match'
     return

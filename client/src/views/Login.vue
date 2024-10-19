@@ -2,6 +2,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '@/Api'
+import { validateEmail } from '@/utils/utils';
 
 const form = reactive({
   email: '',
@@ -10,11 +11,6 @@ const form = reactive({
 
 const errorMessage = ref(null)
 const router = useRouter()
-
-const validateEmail = (email) => {
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailPattern.test(email);
-};
 
 const loginUser = async () => {
   if (!form.email || !form.password) {
