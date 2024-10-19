@@ -7,7 +7,7 @@ const createOrganization = async (req, res) => {
         address,
         phone,
         description,
-        rating } = req.body;
+    } = req.body;
     try {
         const organization = new Organization({
             name,
@@ -16,7 +16,6 @@ const createOrganization = async (req, res) => {
             phone,
             managed_by: req.user.userId,
             description,
-            rating
         });
         await organization.save();
 
@@ -68,12 +67,12 @@ const getOrganizationById = async (req, res) => {
 
 const updateOrganizationById = async (req, res) => {
     const { id } = req.params;
-    const { name, description, managed_by, email, address, rating } = req.body;
+    const { name, description, managed_by, email, address } = req.body;
 
     try {
         const organization = await Organization.findByIdAndUpdate(
             id,
-            { $set: { name, description, managed_by, email, address, rating } },
+            { $set: { name, description, managed_by, email, address } },
             { new: true } // new: true is needed to get the updated object 
         );
 
