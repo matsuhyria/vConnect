@@ -37,7 +37,7 @@ onMounted(fetchOpportunities)
 
       <div
         v-for="opportunity in opportunities.slice(0, 3)"
-        :key="opportunity.id"
+        :key="opportunity._id"
         class="event-item mb-4"
       >
         <h6 class="fw-bold">{{ opportunity.title }}</h6>
@@ -45,10 +45,10 @@ onMounted(fetchOpportunities)
           {{ formatDate(opportunity.date) }} | {{ opportunity.address }}
         </p>
         <router-link
-        :to="`/opportunities/${id}`"
+        :to="`/opportunities/${opportunity._id}`"
         class="btn border-secondary-subtle w-50 btn-light"
         >Sign Up</router-link
-      >
+        >
       </div>
     </div>
   </div>
