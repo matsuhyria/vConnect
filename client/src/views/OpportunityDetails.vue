@@ -49,6 +49,7 @@ const fetchOpportunityData = async () => {
 const signUpForOpportunity = async () => {
   try {
     await api.createRegistration(opportunityId)
+    getRegistrationsForOpportunity()
   } catch (error) {
     console.error('Failed to sign up', error)
   }
@@ -117,7 +118,7 @@ onMounted(() => {
         <div
           class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3"
         >
-          <p class="m-0">
+          <p class="m-0 d-flex gap-2">
             <LockIcon />
             {{ registrations.length }} volunteers already signed up
           </p>
