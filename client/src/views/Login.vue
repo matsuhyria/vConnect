@@ -11,11 +11,23 @@ const form = reactive({
 const errorMessage = ref(null)
 const router = useRouter()
 
+const validateEmail = (email) => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(email);
+};
+
 const loginUser = async () => {
   if (!form.email || !form.password) {
     errorMessage.value = 'Email and password are required'
     return
   }
+
+  if(!validateEmail(form.email)) {
+    errorMessage.value = 'Please enter a valid email address'
+    console.log(form.email)
+    return
+  }
+
   try {
     await api.login({
       email: form.email,
@@ -44,7 +56,7 @@ const loginUser = async () => {
               >Email address</label
             >
             <input
-              type="email"
+              type="text"
               class="form-control"
               id="email"
               v-model="form.email"
