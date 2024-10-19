@@ -128,4 +128,25 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { createUser, loginUser, getUser, updateUser, deleteUser, createAdminUser };
+const checkEmail = async (req, res) => {
+    const email = req.query.email;   
+    
+    if(!email) {
+        return res.status(400).json({ message: 'Email is required' });
+    }
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (user) {
+            return res.status(200).json({ exists: true });
+        } else {
+            return res.status(200).json({ exists: false });        
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Server Error', err });
+    }
+};
+
+module.exports = { createUser, loginUser, getUser, updateUser, deleteUser, createAdminUser, checkEmail };
