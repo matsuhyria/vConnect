@@ -1,4 +1,3 @@
-const { TOKEN_COOKIE_NAME } = require('../../helpers/constants');
 const { verifyToken } = require('../../helpers/jwt');
 
 // middleware for verifying token, roles, and ownership
@@ -31,8 +30,7 @@ const verifyAccess = ({ requiredType = null, checkOwnUser = false } = {}) => {
             next();
         } catch (err) {
             console.error(err);
-            res.clearCookie(TOKEN_COOKIE_NAME); // Clear the token from cookies if it is invalid
-            return res.status(403).json({ message: 'Invalid Token', err });
+            return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
         }
     };
 };

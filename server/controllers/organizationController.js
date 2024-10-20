@@ -23,7 +23,7 @@ const createOrganization = async (req, res) => {
         res.status(201).json({ message: 'Organization created!', organization });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: err.message });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -62,7 +62,7 @@ const getOrganizationById = async (req, res) => {
             return res.status(400).json({ message: 'Invalid organization ID' });
         }
         console.error(err);
-        return res.status(500).json({ message: 'Failed to retreive organization by id' });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -74,7 +74,7 @@ const updateOrganizationById = async (req, res) => {
         const organization = await Organization.findByIdAndUpdate(
             id,
             { $set: { name, description, managed_by, email, address, rating } },
-            { new: true } // new: true is needed to get the updated object 
+            { new: true, runValidators: true } // new: true is needed to get the updated object 
         );
 
         if (!organization) {
@@ -87,7 +87,7 @@ const updateOrganizationById = async (req, res) => {
             return res.status(400).json({ message: 'Invalid organization ID' });
         }
         console.error(err);
-        return res.status(500).json({ message: 'Failed to update organization' });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -109,7 +109,7 @@ const deleteOrganizationById = async (req, res) => {
             return res.status(400).json({ message: 'Invalid organization ID' });
         }
         console.error(err);
-        res.status(500).json({ message: 'Failed to delete organization' });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 

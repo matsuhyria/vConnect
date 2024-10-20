@@ -31,7 +31,7 @@ const createRegistration = async (req, res) => {
         res.status(201).json({ message: 'Registration has been created', registration });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: err.message });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -74,7 +74,7 @@ const getRegistrationsPerOpportunity = async (req, res) => {
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ message: 'Invalid opportunity ID' });
         }
-        return res.status(500).json({ message: 'Failed to retrieve registration' });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -85,7 +85,7 @@ const updateRegistrationById = async (req, res) => {
         const registration = await Registration.findByIdAndUpdate(
             id,
             { $set: req.body },
-            { new: true }
+            { new: true, runValidators: true }
         );
 
         res.status(200).json(registration);
@@ -94,7 +94,7 @@ const updateRegistrationById = async (req, res) => {
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ message: 'Invalid registration ID' });
         }
-        return res.status(500).json({ message: 'Failed to update registration' });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -110,7 +110,7 @@ const deleteRegistrationById = async (req, res) => {
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ message: 'Invalid registration ID' });
         }
-        res.status(500).json({ message: 'Failed to delete registration' });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -132,7 +132,7 @@ const confirmAttendance = async (req, res) => {
         const registration = await Registration.findByIdAndUpdate(
             id,
             { $set: { status: 'confirmed' } },
-            { new: true }
+            { new: true, runValidators: true }
         );
 
         if (!registration) {
@@ -143,7 +143,7 @@ const confirmAttendance = async (req, res) => {
     }
     catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Failed to confirm attendance' });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 
 };

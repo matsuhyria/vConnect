@@ -22,7 +22,7 @@ const verifyOrganizationManager = () => {
             next();
         } catch (err) {
             console.error(err);
-            return res.status(500).json({ message: 'Server Error', err });
+            return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
         }
     };
 };

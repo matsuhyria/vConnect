@@ -23,7 +23,7 @@ const createOpportunity = async (req, res) => {
         return res.status(201).json({ message: 'Opportunity created!', opportunity });
     } catch (err) {
         console.error(err);
-        return res.status(400).send({ message: err.message });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -68,7 +68,7 @@ const getOpportunities = async (req, res) => {
         });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -79,7 +79,7 @@ const getOpportunity = async (req, res) => {
         res.status(200).json(opportunity);
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -90,7 +90,7 @@ const deleteAllOpportunities = async (req, res) => {
         res.status(200).json({ deletedOpportunities });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -104,7 +104,7 @@ const getOpportunitiesPerOrganization = async (req, res) => {
         res.status(200).json(opportunities);
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -115,13 +115,13 @@ const updateOpportunity = async (req, res) => {
         const opportunity = await Opportunity.findByIdAndUpdate(
             req.params.id,
             { $set: { title, date, address, description, organizationId } },
-            { new: true }
+            { new: true, runValidators: true }
         );
         if (!opportunity) return res.status(404).json({ message: 'Opportunity not found' });
         res.status(201).json(opportunity);
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -135,7 +135,7 @@ const deleteOpportunity = async (req, res) => {
         res.status(200).json({ message: 'Opportunity deleted!', opportunity });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -146,7 +146,7 @@ const encryptOpportunityId = async (req, res) => {
         res.status(200).json(encryptedId);
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
