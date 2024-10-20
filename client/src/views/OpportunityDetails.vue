@@ -1,7 +1,7 @@
 <script setup>
 import api from '@/Api'
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import QrcodeVue from 'qrcode.vue'
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { truncateDate } from '@/utils/utils.js'
@@ -12,6 +12,7 @@ import CalendarIcon from '@/components/icons/CalendarIcon.vue'
 import state, { isVolunteer } from '@/state'
 
 const route = useRoute()
+const router = useRouter()
 
 const opportunity = ref({})
 const organization = ref({})
@@ -47,6 +48,9 @@ const fetchOpportunityData = async () => {
 
 // Sign up for the opportunity
 const signUpForOpportunity = async () => {
+  if (!state.user) {
+    return router.push('/login')
+  }
   try {
     await api.createRegistration(opportunityId)
     getRegistrationsForOpportunity()
@@ -107,7 +111,9 @@ onMounted(() => {
           <li class="list-inline-item d-flex gap-1 align-items-center">
             <CalendarIcon class="me-1" />{{ truncateDate(opportunity.date) }}
           </li>
-          <li class="list-inline-item d-flex gap-1 align-items-center"><MapIcon />{{ opportunity.address }}</li>
+          <li class="list-inline-item d-flex gap-1 align-items-center">
+            <MapIcon />{{ opportunity.address }}
+          </li>
         </ul>
 
         <div class="my-5">
@@ -149,7 +155,7 @@ onMounted(() => {
           </button>
 
           <button
-            v-else-if="isVolunteer()"
+            v-else-if="isVolunteer() || !state.user"
             class="btn btn-dark"
             @click="signUpForOpportunity"
           >
