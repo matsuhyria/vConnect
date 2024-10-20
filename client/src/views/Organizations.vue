@@ -91,18 +91,20 @@ onMounted(() => {
         :key="org.id"
         class="col-sm-6 col-lg-4 col-xxl-3 mb-4"
       >
-        <div class="card">
-          <div class="card-body">
+        <div class="card h-100">
+          <div class="card-body justify-content-between d-flex flex-column">
             <h5 class="card-name fs-4 fw-semibold">{{ org.name }}</h5>
             <p class="card-text text-secondary">
               {{ org.description?.slice(0, 105) }}...
             </p>
-            <p class="text-body-secondary"><MapIcon /> {{ org.address }}</p>
-            <router-link
-              :to="`/organizations/${org._id}`"
-              class="btn border-secondary-subtle w-100 btn-light"
-              >Read more</router-link
-            >
+            <div>
+              <p class="text-body-secondary"><MapIcon /> {{ org.address }}</p>
+              <router-link
+                :to="`/organizations/${org._id}`"
+                class="btn border-secondary-subtle w-100 btn-light"
+                >Read more</router-link
+              >
+            </div>
           </div>
         </div>
       </div>

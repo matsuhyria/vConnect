@@ -119,7 +119,7 @@ onMounted(() => {
 <template>
   <div class="container my-5">
     <div
-      class="d-flex flex-column flex-md-row justify-content-between align-items-start mb-4"
+      class="d-flex flex-column flex-lg-row justify-content-between align-items-start mb-4"
     >
       <div class="text-start">
         <h1 class="h2 fw-bold">Volunteering Opportunities</h1>
@@ -128,16 +128,11 @@ onMounted(() => {
           and availability
         </p>
       </div>
-      <div>
-        <button
-          class="btn btn-danger"
-          @click="confirmRemoveModal = true"
-          v-if="opportunities.length && isAdmin()"
+      <div class="d-flex gap-2 flex-column flex-xl-row">
+        <form
+          @submit.prevent="fetchOpportunities"
+          class="d-flex gap-2 align-items-start"
         >
-          Remove all opportunities
-        </button>
-
-        <form @submit.prevent="fetchOpportunities">
           <input
             type="date"
             id="filterDate"
@@ -149,6 +144,13 @@ onMounted(() => {
             Filter
           </button>
         </form>
+        <button
+          class="btn btn-danger"
+          @click="confirmRemoveModal = true"
+          v-if="opportunities.length && isAdmin()"
+        >
+          Remove all opportunities
+        </button>
       </div>
     </div>
 

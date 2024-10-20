@@ -62,13 +62,13 @@ const getRegistrationsPerOpportunity = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const registration = await Registration.find({ opportunity: id });
+        const registrations = await Registration.find({ opportunity: id });
 
-        if (!registration) {
-            return res.status(404).json({ message: 'Registration for this opportunity not found' });
+        if (!registrations) {
+            return res.status(404).json({ message: 'Registrations for this opportunity not found' });
         }
 
-        res.status(200).json(registration);
+        res.status(200).json(registrations);
     } catch (err) {
         console.error(err);
         if (err.kind === 'ObjectId') {

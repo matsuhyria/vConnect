@@ -23,9 +23,6 @@ const orgSchema = new Schema({
     address: {
         type: String,
         required: true
-    },
-    rating: {
-        type: Number,
     }
 });
 
