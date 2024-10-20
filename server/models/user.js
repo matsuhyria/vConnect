@@ -16,6 +16,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true,
+        minlength: 3
     },
     type: {
         type: String, enum: ['volunteer', 'organization_representative', 'admin'], default: 'volunteer'

@@ -26,7 +26,7 @@ const verifyRegistrationOwnership = () => {
             if (err.kind === 'ObjectId') {
                 return res.status(400).json({ err: 'Invalid registration ID' });
             }
-            return res.status(500).json({ message: 'Server Error', err: err.message });
+            return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
         }
     };
 };

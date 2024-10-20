@@ -23,7 +23,7 @@ const createOpportunity = async (req, res) => {
         return res.status(201).json({ message: 'Opportunity created!', opportunity });
     } catch (err) {
         console.error(err);
-        return res.status(400).send({ message: err.message });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -31,13 +31,14 @@ const getOpportunities = async (req, res) => {
 
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 8;
-    const date = req.query.date && req.query.date !== 'null' && req.query.date !== 'undefined' ? req.query.date : new Date();
+    const date = req.query.date && req.query.date !== 'null' && req.query.date !== 'undefined' ? req.query.date : null;
 
     if (page <= 0 || limit <= 0) {
         return res.status(400).json({ message: 'Invalid page or limit parameter. It must be a positive integer.' });
     }
 
-    const parsedDate = new Date(date);
+    // nullish date gets converted into 0 which results in new Date() obj with value of 1970. All dates before today's date are discarded when applyDateFiltration()
+    const parsedDate = new Date(date);     
     if (isNaN(parsedDate.getTime())) {
         return res.status(400).json({ message: 'Invalid date format. Please provide a valid date in the YYYY-MM-DD format.' });
     }
@@ -67,7 +68,7 @@ const getOpportunities = async (req, res) => {
         });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -78,7 +79,7 @@ const getOpportunity = async (req, res) => {
         res.status(200).json(opportunity);
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -89,7 +90,7 @@ const deleteAllOpportunities = async (req, res) => {
         res.status(200).json({ deletedOpportunities });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -103,7 +104,7 @@ const getOpportunitiesPerOrganization = async (req, res) => {
         res.status(200).json(opportunities);
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -114,13 +115,13 @@ const updateOpportunity = async (req, res) => {
         const opportunity = await Opportunity.findByIdAndUpdate(
             req.params.id,
             { $set: { title, date, address, description, organizationId } },
-            { new: true }
+            { new: true, runValidators: true }
         );
         if (!opportunity) return res.status(404).json({ message: 'Opportunity not found' });
         res.status(201).json(opportunity);
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -134,7 +135,7 @@ const deleteOpportunity = async (req, res) => {
         res.status(200).json({ message: 'Opportunity deleted!', opportunity });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 
@@ -145,7 +146,7 @@ const encryptOpportunityId = async (req, res) => {
         res.status(200).json(encryptedId);
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Server Error', err });
+        return res.status(500).json({ message: 'An unexpected error occurred. Please try again later.'});
     }
 };
 

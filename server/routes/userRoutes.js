@@ -4,7 +4,6 @@ const router = express.Router();
 const { BASE_PATH } = require('../helpers/constants');
 const { createUser, createAdminUser, getUser, updateUser, deleteUser, loginUser } = require('../controllers/userController');
 const verifyAccess = require('../middlewares/auth/verifyAccess');
-// addUser('123', 'admin', 'admin@vconnect.com', 'admin');
 
 // Define routes for creating a new user and logging in
 router.post(`${BASE_PATH}/users`, createUser);

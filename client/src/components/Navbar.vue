@@ -7,38 +7,40 @@ const username = computed(() => state?.user?.name)
 
 <template>
   <header class="navbar bg-black">
-    <nav class="container-fluid d-flex justify-content-between p-0 px-sm-2">
-      <div>
-        <a href="/" class="navbar-brand text-white">
-          <img :src="`/logo-w.svg`" alt="Logo" width="40" />
+    <nav
+      class="container-fluid d-flex justify-content-between flex-nowrap gap-1 py-0 px-sm-4"
+    >
+      <div class="d-flex align-items-center">
+        <a href="/" id="nav-logo" class="navbar-brand">
+          <img src="/logo-w.svg" alt="Logo" width="40" />
         </a>
+        <ul class="nav flex-nowrap">
+          <li class="nav-item">
+            <router-link
+              to="/opportunities"
+              class="nav-link text-white p-0 mx-1 mx-md-3"
+              >Opportunities</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link
+              to="/organizations"
+              class="nav-link text-white p-0 mx-1 mx-md-3"
+              >Organizations</router-link
+            >
+          </li>
+        </ul>
       </div>
-      <ul class="nav me-auto">
-        <li class="nav-item">
-          <router-link
-            to="/opportunities"
-            class="nav-link text-white p-0 mx-1 mx-md-3"
-            >Opportunities</router-link
-          >
-        </li>
-        <li class="nav-item">
-          <router-link
-            to="/organizations"
-            class="nav-link text-white p-0 mx-1 mx-md-3"
-            >Organizations</router-link
-          >
-        </li>
-      </ul>
 
-      <div class="nav-item d-flex">
+      <div class="nav-item text-white fw-bold overflow-hidden text-capitalize">
         <router-link
           to="/profile"
-          class="nav-link text-white p-1 fw-bold text-capitalize"
+          class="nav-link overflow-hidden trimmed-text"
           v-if="username"
         >
           Hi, {{ username }}</router-link
         >
-        <router-link to="/login" class="nav-link text-white p-1 fw-bold" v-else
+        <router-link to="/login" class="nav-link overflow-hidden trimmed-text" v-else
           >Login</router-link
         >
       </div>
@@ -47,8 +49,17 @@ const username = computed(() => state?.user?.name)
 </template>
 
 <style scoped>
-.navbar {
+nav {
   padding: 1rem;
+}
+
+#nav-logo {
+  color: white;
+}
+
+.trimmed-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .router-link-exact-active {

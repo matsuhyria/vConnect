@@ -16,6 +16,7 @@ const loginUser = async () => {
     errorMessage.value = 'Email and password are required'
     return
   }
+
   try {
     await api.login({
       email: form.email,

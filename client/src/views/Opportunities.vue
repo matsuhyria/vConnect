@@ -129,23 +129,23 @@ onMounted(() => {
         </p>
       </div>
       <div class="d-flex gap-2 flex-column flex-xl-row">
-        <div class="d-flex gap-2 align-items-start">
+        <form
+          @submit.prevent="fetchOpportunities"
+          class="d-flex gap-2 align-items-start"
+        >
           <input
             type="date"
             id="filterDate"
             v-model="selectedDate"
-            min="2024-01-01"
+            :min="new Date().toISOString().split('T')[0]"
             class="form-control"
           />
-          <button
-            @click="fetchOpportunities"
-            class="btn border-secondary-subtle w-100 btn-light"
-          >
+          <button class="btn border-secondary-subtle w-100 btn-light">
             Filter
           </button>
-        </div>
+        </form>
         <button
-          class="btn btn-danger "
+          class="btn btn-danger"
           @click="confirmRemoveModal = true"
           v-if="opportunities.length && isAdmin()"
         >

@@ -100,14 +100,14 @@ onMounted(() => {
 <template>
   <div class="container mt-5">
     <div class="row justify-content-between">
-      <div class="col-lg-7 mb-5 py-4">
+      <div class="col-lg-7 mb-5">
         <h1 class="h2 fw-bold">{{ opportunity.title }}</h1>
         <p class="text-body-secondary">{{ organization.name }}</p>
-        <ul class="text-body-secondary list-inline">
-          <li class="list-inline-item pe-5">
+        <ul class="text-body-secondary list-inline d-flex gap-5">
+          <li class="list-inline-item d-flex gap-1 align-items-center">
             <CalendarIcon class="me-1" />{{ truncateDate(opportunity.date) }}
           </li>
-          <li class="list-inline-item"><MapIcon />{{ opportunity.address }}</li>
+          <li class="list-inline-item d-flex gap-1 align-items-center"><MapIcon />{{ opportunity.address }}</li>
         </ul>
 
         <div class="my-5">
@@ -157,7 +157,7 @@ onMounted(() => {
           </button>
         </div>
       </div>
-      <Sidebar class="col-lg-4 col-md-5" />
+      <Sidebar class="col-lg-5 col-xl-4" />
     </div>
 
     <!-- QR Code Modal -->

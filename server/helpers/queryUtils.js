@@ -11,7 +11,7 @@ const applyDateFiltration = (query, date) => {
     const startOfDay = new Date(date).setHours(0, 0, 0, 0);
     const endOfDay = new Date(date).setHours(23, 59, 59, 999);
 
-    if (startOfDay < today || startOfDay == today) {
+    if (startOfDay < today) {
         return query.where('date').gte(today);
     } 
 
