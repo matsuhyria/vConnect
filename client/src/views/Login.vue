@@ -2,7 +2,6 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '@/Api'
-import { validateEmail } from '@/utils/utils';
 
 const form = reactive({
   email: '',
@@ -15,12 +14,6 @@ const router = useRouter()
 const loginUser = async () => {
   if (!form.email || !form.password) {
     errorMessage.value = 'Email and password are required'
-    return
-  }
-
-  if(!validateEmail(form.email)) {
-    errorMessage.value = 'Please enter a valid email address'
-    console.log(form.email)
     return
   }
 
@@ -52,7 +45,7 @@ const loginUser = async () => {
               >Email address</label
             >
             <input
-              type="text"
+              type="email"
               class="form-control"
               id="email"
               v-model="form.email"

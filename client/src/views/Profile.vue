@@ -3,6 +3,7 @@ import LockIcon from '@/components/icons/LockIcon.vue'
 import state from '@/state'
 import { ref } from 'vue'
 import api from '@/Api'
+import { MIN_PASS_LENGTH } from '@/utils/constants'
 
 const editingName = ref(false) // To track if the name field is being edited
 const editingEmail = ref(false) // To track if the email field is being edited
@@ -16,8 +17,6 @@ const confirmPassword = ref('')
 const passwordError = ref(null)
 const nameError = ref(null)
 const emailError = ref(null)
-
-const MIN_PASS_LENGTH = 3
 
 // Edit and Save Name
 const startEditingName = () => {
@@ -50,13 +49,6 @@ const startEditingEmail = () => {
 
 const saveEmail = async () => {
   try {
-    const emailExists = await api.checkEmail(userProfile.value.email)
-    
-    if (emailExists) {
-      emailError.value = 'Email already exists. Please use a different email.'
-      return
-    }
-
     await api.updateUser({ email: userProfile.value.email })
     editingEmail.value = false
     emailError.value = null // Clear the error message
@@ -76,11 +68,6 @@ const cancelEditEmail = () => {
 
 // Update Password
 const updatePassword = async () => {
-  if (newPassword.value.length < MIN_PASS_LENGTH) {
-    passwordError.value = 'Password must be at least 3 characters long'
-    return
-  }
-
   if (newPassword.value !== confirmPassword.value) {
     passwordError.value = 'Passwords do not match'
     return
@@ -192,34 +179,36 @@ const updatePassword = async () => {
       <h4 class="align-items-center d-flex fs-4 mb-4">
         <LockIcon class="me-2" />Update Password
       </h4>
-      <div v-if="passwordError" class="alert alert-danger">
-        {{ passwordError }}
-      </div>
-      <div class="mb-3">
-        <label for="newPassword" class="form-label">New Password</label>
-        <input
-          type="password"
-          v-model="newPassword"
-          id="newPassword"
-          class="form-control"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label for="confirmPassword" class="form-label"
-          >Confirm New Password</label
-        >
-        <input
-          type="password"
-          v-model="confirmPassword"
-          id="confirmPassword"
-          class="form-control"
-          required
-        />
-      </div>
-      <button @click="updatePassword" class="btn btn-dark">
-        Update Password
-      </button>
+      <form @submit.prevent="updatePassword">
+        <div v-if="passwordError" class="alert alert-danger">
+          {{ passwordError }}
+        </div>
+        <div class="mb-3">
+          <label for="newPassword" class="form-label">New Password</label>
+          <input
+            type="password"
+            v-model="newPassword"
+            id="newPassword"
+            class="form-control"
+            :minlength="MIN_PASS_LENGTH"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label"
+            >Confirm New Password</label
+          >
+          <input
+            type="password"
+            v-model="confirmPassword"
+            id="confirmPassword"
+            class="form-control"
+            :minlength="MIN_PASS_LENGTH"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-dark">Update Password</button>
+      </form>
     </div>
   </div>
 </template>

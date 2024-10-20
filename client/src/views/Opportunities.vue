@@ -130,17 +130,25 @@ onMounted(() => {
       </div>
       <div>
         <button
-        class="btn btn-danger"
-        @click="confirmRemoveModal = true"
-        v-if="opportunities.length && isAdmin()"
-      >
-        Remove all opportunities
-      </button>
+          class="btn btn-danger"
+          @click="confirmRemoveModal = true"
+          v-if="opportunities.length && isAdmin()"
+        >
+          Remove all opportunities
+        </button>
 
-      <div>
-        <input type="date" id="filterDate" v-model="selectedDate" min="2024-01-01" class="form-control"/>
-        <button @click="fetchOpportunities" class="btn border-secondary-subtle w-100 btn-light">Filter</button>
-      </div>
+        <form @submit.prevent="fetchOpportunities">
+          <input
+            type="date"
+            id="filterDate"
+            v-model="selectedDate"
+            :min="new Date().toISOString().split('T')[0]"
+            class="form-control"
+          />
+          <button class="btn border-secondary-subtle w-100 btn-light">
+            Filter
+          </button>
+        </form>
       </div>
     </div>
 

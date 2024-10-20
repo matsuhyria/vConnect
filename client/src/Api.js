@@ -45,10 +45,6 @@ export default {
     storeUserData(response)
     return response
   },
-  checkEmail: async (email) => {
-    const { data } = await instance.get(`/users/check-email?email=${email}`)
-    return data.exists
-  },
   getOpportunities: async (page, date) => {
     return instance.get(`/opportunities?page=${page}&date=${date}`)
   },

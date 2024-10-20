@@ -34,3 +34,11 @@ defineProps({
     </div>
   </div>
 </template>
+
+<style scoped>
+h5 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+</style>

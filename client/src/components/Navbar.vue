@@ -8,11 +8,9 @@ const username = computed(() => state?.user?.name)
 <template>
   <header class="navbar bg-black">
     <nav class="container-fluid d-flex justify-content-between p-0 px-sm-2">
-      <div>
-        <a href="/" class="navbar-brand text-white">
-          <img :src="`/logo-w.svg`" alt="Logo" width="40" />
-        </a>
-      </div>
+      <a href="/" id="nav-logo" class="navbar-brand">
+        <img src="/logo-w.svg" alt="Logo" width="40" />
+      </a>
       <ul class="nav me-auto">
         <li class="nav-item">
           <router-link
@@ -47,8 +45,12 @@ const username = computed(() => state?.user?.name)
 </template>
 
 <style scoped>
-.navbar {
+nav {
   padding: 1rem;
+}
+
+#nav-logo {
+  color: white;
 }
 
 .router-link-exact-active {

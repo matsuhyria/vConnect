@@ -2,6 +2,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '@/Api'
+import { MIN_PASS_LENGTH } from '@/utils/constants'
 
 // Reactive form data
 const form = reactive({
@@ -87,6 +88,7 @@ const registerUser = async () => {
               class="form-control"
               id="password"
               v-model="form.password"
+              :minlength="MIN_PASS_LENGTH"
               required
             />
           </div>
@@ -99,6 +101,7 @@ const registerUser = async () => {
               class="form-control"
               id="confirmPassword"
               v-model="form.confirmPassword"
+              :minlength="MIN_PASS_LENGTH"
               required
             />
           </div>
