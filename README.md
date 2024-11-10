@@ -1,27 +1,3 @@
-## Getting started
-
-```bash
-# Clone repository
-git clone git@git.chalmers.se:courses/dit342/group-00-web.git
-
-# Change into the directory
-cd group-00-web
-
-# Setup backend
-cd server && npm install
-npm run dev
-
-# Setup frontend
-cd client && npm install
-npm run serve
-```
-
-> Check out the detailed instructions for [backend](./server/README.md) and [frontend](./client/README.md).
-
-## Visual Studio Code (VSCode)
-
-Open the `server` and `client` in separate VSCode workspaces or open the combined [backend-frontend.code-workspace](./backend-frontend.code-workspace). Otherwise, workspace-specific settings don't work properly.
-
 ### Purpose
 
 VolunteerConnect is a platform designed to link volunteers with organizations and events that need their support. It serves as a central hub where volunteers can discover opportunities, sign up for events and provide feedback. Similarly, organizations can post volunteer opportunities.
